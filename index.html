@@ -3,720 +3,1065 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RebixMart - Smart choices. Better prices. Trusted sellers.</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<title>RebixMart | Smart choices. Better prices. Trusted sellers.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --darkblue: #1e3a5f;
-    --darkblue2: #162d4a;
-    --darkblue-light: #2563a8;
-    --black: #0a0a0f;
-    --white: #ffffff;
-    --grey: #f4f4f8;
-    --border: #e5e7eb;
+  :root{
+    --navy:#1e3a5f;
+    --navy-deep:#152a45;
+    --black:#0a0a0f;
+    --white:#ffffff;
+    --grey-line:#e7e9ee;
+    --grey-text:#5b6472;
+    --savings-green:#1e7a4c;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *{margin:0;padding:0;box-sizing:border-box;}
 
-  body {
-    font-family: 'Outfit', sans-serif;
-    background: var(--white);
-    color: var(--black);
-    overflow-x: hidden;
+  body{
+    font-family:'Outfit',sans-serif;
+    color:var(--black);
+    background:var(--white);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
   }
 
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--black);
-    padding: 0 40px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(30,58,95,0.4);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  h1,h2,h3,h4,.brand-word{
+    font-family:'Bebas Neue',sans-serif;
+    letter-spacing:0.03em;
+    line-height:1.05;
   }
 
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+
+  :focus-visible{
+    outline:3px solid var(--navy);
+    outline-offset:2px;
   }
 
-  .logo-icon {
-    width: 36px;
-    height: 36px;
-    background: var(--darkblue);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
+  .container{
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 24px;
   }
 
-  .logo-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    letter-spacing: 2px;
-    line-height: 1;
-    text-transform: uppercase;
+  /* ===== NAV ===== */
+  .nav{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:var(--white);
+    border-bottom:1px solid var(--grey-line);
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 24px;
+    max-width:1200px;
+    margin:0 auto;
+    gap:20px;
+  }
+  .logo-slot{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-shrink:0;
+  }
+  /* Reserved space for logo.png. Stays empty and invisible until the file is added —
+     no placeholder box, no fake logo, no fallback text standing in for it. */
+  .logo-img-box{
+    height:36px;
+    width:36px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .wordmark{
+    font-family:'Outfit',sans-serif;
+    font-weight:700;
+    font-size:21px;
+    color:var(--navy-deep);
+    letter-spacing:-0.01em;
+  }
+  .footer-wordmark{
+    color:var(--white);
   }
 
-  .logo-rebix { color: var(--white); }
-  .logo-mart { color: var(--darkblue-light); }
+  .nav-links{
+    display:flex;
+    gap:32px;
+    font-weight:500;
+    font-size:15px;
+  }
+  .nav-links a{
+    color:var(--black);
+    position:relative;
+    padding:6px 0;
+  }
+  .nav-links a:hover{color:var(--navy);}
 
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    list-style: none;
+  .nav-actions{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-shrink:0;
+  }
+  .btn{
+    font-size:15px;
+    font-weight:600;
+    padding:10px 20px;
+    border-radius:6px;
+    transition:background .15s ease, color .15s ease, transform .1s ease;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-ghost{
+    color:var(--navy);
+    background:transparent;
+  }
+  .btn-ghost:hover{background:#eef2f6;}
+  .btn-solid{
+    background:var(--navy);
+    color:var(--white);
+  }
+  .btn-solid:hover{background:var(--navy-deep);}
+
+  .user-chip{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:6px 14px 6px 6px;
+    border-radius:999px;
+    background:#eef2f6;
+    font-weight:600;
+    font-size:14px;
+  }
+  .avatar-circle{
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    background:var(--navy);
+    color:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:16px;
   }
 
-  .nav-links a {
-    color: #d1d5db;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: color 0.2s;
+  .nav-toggle{
+    display:none;
+    background:none;
+    font-size:28px;
+    color:var(--navy-deep);
+    line-height:1;
   }
 
-  .nav-links a:hover { color: var(--darkblue-light); }
+  /* ===== SLIM SEARCH STRIP ===== */
+  .search-strip{
+    background:#f5f7fa;
+    border-bottom:1px solid var(--grey-line);
+    padding:14px 24px;
+  }
+  .search-strip-inner{
+    max-width:1200px;
+    margin:0 auto;
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+  .category-select{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--grey-line);
+    border-radius:8px;
+    padding:0 14px;
+    height:46px;
+    font-size:14px;
+    font-weight:500;
+    color:var(--black);
+    flex-shrink:0;
+  }
+  .category-select select{
+    border:none;
+    outline:none;
+    background:transparent;
+    font-family:'Outfit',sans-serif;
+    font-size:14px;
+    font-weight:500;
+    color:var(--black);
+    height:100%;
+  }
+  .search-strip-form{
+    flex:1;
+    display:flex;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--grey-line);
+    border-radius:8px;
+    padding:4px;
+  }
+  .search-strip-form input{
+    flex:1;
+    border:none;
+    outline:none;
+    padding:10px 14px;
+    font-size:14px;
+    font-family:'Outfit',sans-serif;
+    color:var(--black);
+    background:transparent;
+  }
+  .search-strip-form button{
+    background:var(--navy);
+    color:var(--white);
+    font-weight:600;
+    padding:0 20px;
+    border-radius:6px;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background .15s ease;
+  }
+  .search-strip-form button:hover{background:var(--navy-deep);}
 
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  /* ===== PROMO BANNER ===== */
+  .promo-banner{
+    max-width:1200px;
+    margin:20px auto;
+    padding:0 24px;
+  }
+  .promo-card{
+    background:linear-gradient(120deg, var(--navy-deep) 0%, var(--navy) 100%);
+    border-radius:14px;
+    padding:28px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+    color:var(--white);
+    position:relative;
+    overflow:hidden;
+  }
+  .promo-card::after{
+    content:"";
+    position:absolute;
+    right:-40px;
+    top:-40px;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:rgba(232,121,47,0.18);
+  }
+  .promo-text h3{
+    font-size:26px;
+    margin-bottom:4px;
+    position:relative;
+  }
+  .promo-text p{
+    font-size:14px;
+    color:rgba(255,255,255,0.75);
+    position:relative;
+  }
+  .promo-btn{
+    background:#e8792f;
+    color:var(--white);
+    font-weight:700;
+    font-size:14px;
+    padding:12px 24px;
+    border-radius:8px;
+    white-space:nowrap;
+    position:relative;
+    transition:background .15s ease;
+  }
+  .promo-btn:hover{background:#c8501f;}
+
+  /* ===== MARQUEE ===== */
+  .marquee-wrap{
+    background:#f5f7fa;
+    border-bottom:1px solid var(--grey-line);
+    overflow:hidden;
+    padding:14px 0;
+  }
+  .marquee-track{
+    display:flex;
+    gap:40px;
+    white-space:nowrap;
+    animation:scroll-left 28s linear infinite;
+    width:max-content;
+  }
+  .marquee-track span{
+    font-size:15px;
+    font-weight:600;
+    color:var(--navy);
+  }
+  @keyframes scroll-left{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{animation:none;}
   }
 
-  .btn-login {
-    background: transparent;
-    border: 1px solid rgba(30,58,95,0.6);
-    color: var(--white);
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
+  /* ===== SECTION HEADERS ===== */
+  .section{
+    padding:64px 24px;
+  }
+  .section-head{
+    max-width:1200px;
+    margin:0 auto 32px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-size:34px;
+    color:var(--navy-deep);
+  }
+  .section-head p{
+    color:var(--grey-text);
+    font-size:15px;
+    max-width:420px;
+  }
+  .link-all{
+    font-weight:600;
+    font-size:14px;
+    color:var(--navy);
+    border-bottom:2px solid var(--navy);
+    padding-bottom:2px;
+    flex-shrink:0;
   }
 
-  .btn-login:hover { border-color: var(--darkblue-light); color: var(--darkblue-light); }
-
-  .btn-signup {
-    background: var(--darkblue);
-    border: none;
-    color: var(--white);
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
+  /* ===== CATEGORY GRID ===== */
+  .category-grid{
+    max-width:1200px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+  }
+  .cat-card{
+    background:var(--white);
+    border:1px solid var(--grey-line);
+    border-radius:14px;
+    padding:26px 18px;
+    text-align:center;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .cat-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 24px rgba(30,58,95,0.12);
+    border-color:var(--navy);
+  }
+  .cat-icon{
+    font-size:34px;
+    margin-bottom:10px;
+  }
+  .cat-name{
+    font-weight:600;
+    font-size:15px;
+    color:var(--black);
   }
 
-  .btn-signup:hover { background: var(--darkblue2); }
+  /* ===== DEALS ===== */
+  .deals-grid{
+    max-width:1200px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+  }
+  .deal-card{
+    background:var(--white);
+    border:1px solid var(--grey-line);
+    border-radius:14px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition:box-shadow .15s ease, transform .15s ease;
+  }
+  .deal-card:hover{
+    box-shadow:0 14px 30px rgba(10,10,15,0.10);
+    transform:translateY(-3px);
+  }
+  .deal-image{
+    height:160px;
+    background:#f2f4f7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:52px;
+    position:relative;
+  }
+  .deal-body{
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    flex:1;
+  }
+  .deal-cat{
+    font-size:12px;
+    font-weight:600;
+    color:var(--navy);
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  .deal-name{
+    font-weight:600;
+    font-size:16px;
+    color:var(--black);
+    line-height:1.3;
+  }
+  .price-row{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    margin-top:auto;
+  }
+  .price-now{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:22px;
+    color:var(--navy-deep);
+    letter-spacing:0.02em;
+  }
+  .deal-cta{
+    margin-top:10px;
+    background:var(--navy);
+    color:var(--white);
+    font-weight:600;
+    font-size:14px;
+    padding:11px;
+    border-radius:8px;
+    text-align:center;
+    transition:background .15s ease;
+  }
+  .deal-cta:hover{background:var(--navy-deep);}
 
-  .hero {
-    background: var(--white);
-    padding: 80px 40px 60px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    border-bottom: 4px solid var(--darkblue);
+  /* ===== HOW IT WORKS ===== */
+  .how-grid{
+    max-width:1200px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:24px;
+  }
+  .how-card{
+    text-align:left;
+  }
+  .how-index{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:44px;
+    color:var(--grey-line);
+    line-height:1;
+    margin-bottom:10px;
+  }
+  .how-card h4{
+    font-size:19px;
+    color:var(--navy-deep);
+    margin-bottom:8px;
+    letter-spacing:0.01em;
+  }
+  .how-card p{
+    font-size:14px;
+    color:var(--grey-text);
   }
 
-  .hero-badge {
-    display: inline-block;
-    background: rgba(30,58,95,0.08);
-    border: 1px solid rgba(30,58,95,0.25);
-    color: var(--darkblue);
-    padding: 6px 16px;
-    border-radius: 100px;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    margin-bottom: 24px;
-    animation: fadeUp 0.6s ease both;
+  /* ===== ALERT BANNER ===== */
+  .alert-banner{
+    background:var(--black);
+    color:var(--white);
+    border-radius:20px;
+    max-width:1200px;
+    margin:0 auto;
+    padding:48px 40px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:32px;
+    flex-wrap:wrap;
+  }
+  .alert-copy h3{
+    font-size:30px;
+    margin-bottom:8px;
+  }
+  .alert-copy p{
+    color:rgba(255,255,255,0.7);
+    font-size:15px;
+    max-width:420px;
+  }
+  .alert-form{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    flex:1;
+    max-width:420px;
+  }
+  .alert-form input{
+    flex:1;
+    min-width:200px;
+    padding:13px 16px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.2);
+    background:rgba(255,255,255,0.06);
+    color:var(--white);
+    font-size:15px;
+    font-family:'Outfit',sans-serif;
+  }
+  .alert-form input::placeholder{color:rgba(255,255,255,0.45);}
+  .alert-form button{
+    background:var(--white);
+    color:var(--black);
+    font-weight:700;
+    padding:13px 22px;
+    border-radius:8px;
+    font-size:14px;
+    white-space:nowrap;
+    transition:opacity .15s ease;
+  }
+  .alert-form button:hover{opacity:0.85;}
+  .alert-msg{
+    width:100%;
+    font-size:13px;
+    margin-top:4px;
+    min-height:18px;
+  }
+  .alert-msg.success{color:#7fe0a8;}
+  .alert-msg.error{color:#ff9b9b;}
+
+  /* ===== FOOTER ===== */
+  .footer{
+    background:var(--navy-deep);
+    color:rgba(255,255,255,0.85);
+    padding:56px 24px 24px;
+  }
+  .footer-inner{
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .footer-top{
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr 1fr;
+    gap:32px;
+    padding-bottom:40px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+  }
+  .footer-brand .logo-slot img{
+    height:38px;
+    filter:brightness(0) invert(1);
+  }
+  .footer-brand p{
+    font-size:14px;
+    color:rgba(255,255,255,0.6);
+    margin:14px 0 18px;
+    max-width:260px;
+  }
+  .footer-contact{
+    font-size:14px;
+    color:rgba(255,255,255,0.75);
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .footer-col h5{
+    font-family:'Outfit',sans-serif;
+    font-size:14px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    margin-bottom:16px;
+    color:var(--white);
+  }
+  .footer-col ul{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .footer-col a{
+    font-size:14px;
+    color:rgba(255,255,255,0.65);
+    transition:color .15s ease;
+  }
+  .footer-col a:hover{color:var(--white);}
+  .footer-bottom{
+    padding-top:20px;
+    font-size:13px;
+    color:rgba(255,255,255,0.5);
+    text-align:center;
   }
 
-  .hero h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(48px, 8vw, 90px);
-    color: var(--black);
-    line-height: 1;
-    letter-spacing: 3px;
-    margin-bottom: 16px;
-    animation: fadeUp 0.7s ease both;
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:960px){
+    .category-grid,.deals-grid,.how-grid{grid-template-columns:repeat(2,1fr);}
+    .footer-top{grid-template-columns:1fr 1fr;}
   }
-
-  .hero h1 span { color: var(--darkblue); }
-
-  .hero p {
-    color: #4b5563;
-    font-size: 18px;
-    max-width: 520px;
-    margin: 0 auto 40px;
-    line-height: 1.6;
-    animation: fadeUp 0.8s ease both;
+  @media (max-width:768px){
+    .nav-links{
+      position:absolute;
+      top:100%;
+      left:0;
+      right:0;
+      background:var(--white);
+      flex-direction:column;
+      gap:0;
+      padding:8px 24px 16px;
+      border-bottom:1px solid var(--grey-line);
+      display:none;
+    }
+    .nav-links.open{display:flex;}
+    .nav-links a{padding:12px 0;border-bottom:1px solid var(--grey-line);}
+    .nav-links a:last-child{border-bottom:none;}
+    .nav-toggle{display:block;}
+    .nav-actions .btn-ghost{display:none;}
+    .search-strip-inner{flex-direction:column;align-items:stretch;}
+    .category-select{width:100%;}
+    .promo-card{padding:22px;}
+    .alert-banner{flex-direction:column;align-items:flex-start;}
   }
-
-  .search-container {
-    max-width: 680px;
-    margin: 0 auto;
-    animation: fadeUp 0.9s ease both;
-  }
-
-  .search-bar {
-    display: flex;
-    background: var(--white);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 0 0 3px rgba(30,58,95,0.15), 0 20px 60px rgba(0,0,0,0.1);
-    border: 2px solid var(--darkblue);
-  }
-
-  .search-bar input {
-    flex: 1;
-    padding: 20px 24px;
-    border: none;
-    outline: none;
-    font-family: 'Outfit', sans-serif;
-    font-size: 16px;
-    color: var(--black);
-    background: transparent;
-  }
-
-  .search-bar input::placeholder { color: #9ca3af; }
-
-  .search-btn {
-    background: var(--darkblue);
-    border: none;
-    padding: 20px 32px;
-    color: white;
-    font-family: 'Outfit', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .search-btn:hover { background: var(--darkblue2); }
-
-  .trending-tags {
-    margin-top: 16px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .tag {
-    background: var(--grey);
-    border: 1px solid var(--border);
-    color: var(--black);
-    padding: 6px 14px;
-    border-radius: 100px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .tag:hover { background: var(--darkblue); border-color: var(--darkblue); color: white; }
-
-  .stats-bar {
-    background: var(--darkblue);
-    padding: 16px 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-  }
-
-  .stat-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: white;
-    padding: 0 32px;
-    border-right: 1px solid rgba(255,255,255,0.2);
-  }
-
-  .stat-item:last-child { border-right: none; }
-
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 24px;
-    letter-spacing: 1px;
-    white-space: nowrap;
-  }
-
-  .stat-label {
-    font-size: 12px;
-    opacity: 0.8;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .marquee-section {
-    background: var(--darkblue);
-    padding: 16px 0;
-    overflow: hidden;
-    white-space: nowrap;
-    border-top: 1px solid rgba(255,255,255,0.1);
-  }
-
-  .marquee-track {
-    display: inline-block;
-    animation: marquee 20s linear infinite;
-  }
-
-  .marquee-item {
-    display: inline-block;
-    color: white;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 0 32px;
-    letter-spacing: 1px;
-    opacity: 0.9;
-  }
-
-  .marquee-dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background: rgba(255,255,255,0.5);
-    border-radius: 50%;
-    vertical-align: middle;
-    margin: 0 8px;
-  }
-
-  .section {
-    padding: 60px 40px;
-    background: var(--white);
-  }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 32px;
-  }
-
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px;
-    letter-spacing: 2px;
-    color: var(--black);
-  }
-
-  .section-title span { color: var(--darkblue); }
-
-  .see-all {
-    color: var(--darkblue);
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  .categories-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 16px;
-  }
-
-  .category-card {
-    background: var(--grey);
-    border-radius: 16px;
-    padding: 24px 16px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.25s;
-    border: 2px solid transparent;
-    text-decoration: none;
-    color: var(--black);
-    display: block;
-  }
-
-  .category-card:hover {
-    background: var(--darkblue);
-    border-color: var(--darkblue);
-    color: var(--white);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(30,58,95,0.2);
-  }
-
-  .category-icon { font-size: 36px; margin-bottom: 10px; display: block; }
-  .category-name { font-size: 13px; font-weight: 600; line-height: 1.3; }
-
-  .deals-section {
-    background: var(--white);
-    padding: 60px 40px;
-    border-top: 4px solid var(--darkblue);
-  }
-
-  .deals-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
-  }
-
-  .deal-card {
-    background: var(--white);
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    transition: all 0.25s;
-    cursor: pointer;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  }
-
-  .deal-card:hover {
-    border-color: var(--darkblue);
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(30,58,95,0.15);
-  }
-
-  .deal-img {
-    width: 100%;
-    height: 160px;
-    background: linear-gradient(135deg, var(--darkblue2), var(--darkblue));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 56px;
-    position: relative;
-  }
-
-  .deal-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: var(--darkblue);
-    color: white;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 100px;
-    letter-spacing: 0.5px;
-  }
-
-  .deal-body { padding: 16px; background: white; }
-
-  .deal-name {
-    color: var(--black);
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    line-height: 1.3;
-  }
-
-  .price-compare { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-
-  .price-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-size: 13px;
-  }
-
-  .price-row.best { background: rgba(30,58,95,0.08); border: 1px solid rgba(30,58,95,0.3); }
-  .price-row.other { background: var(--grey); }
-  .platform { color: #6b7280; font-weight: 500; }
-  .price-row.best .platform { color: var(--darkblue); font-weight: 700; }
-  .price-amount { color: var(--black); font-weight: 700; font-size: 14px; }
-  .price-row.best .price-amount { color: var(--darkblue); }
-
-  .best-label {
-    background: var(--darkblue);
-    color: white;
-    font-size: 9px;
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 4px;
-  }
-
-  .btn-view {
-    width: 100%;
-    background: var(--darkblue);
-    border: none;
-    color: white;
-    padding: 12px;
-    border-radius: 10px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .btn-view:hover { background: var(--darkblue2); }
-
-  .how-section {
-    padding: 80px 40px;
-    background: var(--grey);
-    text-align: center;
-  }
-
-  .how-section .section-title { text-align: center; margin-bottom: 8px; }
-
-  .how-subtitle { color: #6b7280; font-size: 16px; margin-bottom: 56px; }
-
-  .steps-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 32px;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .step-card {
-    background: var(--white);
-    border-radius: 20px;
-    padding: 36px 24px;
-    position: relative;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    transition: all 0.25s;
-  }
-
-  .step-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(30,58,95,0.12); }
-
-  .step-num {
-    position: absolute;
-    top: -16px;
-    left: 24px;
-    width: 36px;
-    height: 36px;
-    background: var(--darkblue);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 15px;
-    box-shadow: 0 4px 12px rgba(30,58,95,0.3);
-  }
-
-  .step-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--black); }
-  .step-desc { font-size: 14px; color: #6b7280; line-height: 1.6; }
-
-  footer {
-    background: var(--black);
-    padding: 60px 40px 30px;
-    border-top: 1px solid rgba(30,58,95,0.3);
-  }
-
-  .footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 40px;
-  }
-
-  .footer-brand p { color: #6b7280; font-size: 14px; line-height: 1.7; margin-top: 12px; max-width: 280px; }
-
-  .footer-col h4 {
-    color: var(--white);
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 16px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  .footer-col a {
-    display: block;
-    color: #6b7280;
-    text-decoration: none;
-    font-size: 14px;
-    margin-bottom: 10px;
-    transition: color 0.2s;
-  }
-
-  .footer-col a:hover { color: var(--darkblue-light); }
-
-  .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.06);
-    padding-top: 24px;
-  }
-
-  .footer-bottom p { color: #4b5563; font-size: 13px; }
-  .footer-bottom span { color: #2563a8; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 0 20px; }
-    .nav-links { display: none; }
-    .hero { padding: 60px 20px 40px; }
-    .section { padding: 40px 20px; }
-    .deals-section { padding: 40px 20px; }
-    .how-section { padding: 60px 20px; }
-    footer { padding: 40px 20px 20px; }
-    .footer-top { grid-template-columns: 1fr 1fr; }
-    .stats-bar { padding: 16px 10px; }
+  @media (max-width:600px){
+    .category-grid,.deals-grid,.how-grid{grid-template-columns:1fr;}
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">
-    <div class="logo-icon">🛒</div>
-    <div class="logo-text">
-      <span class="logo-rebix">REBIX</span><span class="logo-mart">MART</span>
-    </div>
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="search.html">Categories</a></li>
-    <li><a href="search.html">Deals</a></li>
-    <li><a href="sellers.html">Sellers</a></li>
-    <li><a href="login.html">Price Alerts</a></li>
-  </ul>
-  <div class="nav-actions">
-    <button class="btn-login" onclick="window.location.href='login.html'">Login</button>
-    <button class="btn-signup" onclick="window.location.href='signup.html'">Sign Up</button>
-  </div>
-</nav>
+<!-- ================= NAV ================= -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo-slot" aria-label="RebixMart home">
+      <span class="logo-img-box">
+        <svg viewBox="0 0 76 76" width="36" height="36" aria-hidden="true">
+          <circle cx="20" cy="66" r="6" fill="#0a0a0f"/>
+          <circle cx="52" cy="66" r="6" fill="#0a0a0f"/>
+          <path d="M2 4 H14 L20 46 H60 L68 16 H24" fill="none" stroke="#1e3a5f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <g transform="translate(24,10)">
+            <path d="M8 8 V2 a8 8 0 0 1 16 0 V8" fill="none" stroke="#c8501f" stroke-width="4" stroke-linecap="round"/>
+            <rect x="0" y="8" width="32" height="30" rx="4" fill="#e8792f"/>
+            <rect x="4" y="14" width="8" height="18" rx="2" fill="#ffffff" fill-opacity="0.35"/>
+          </g>
+        </svg>
+      </span>
+      <span class="wordmark">RebixMart</span>
+    </a>
 
-<section class="hero">
-  <div class="hero-badge">Nigeria's Number 1 Price Comparison Platform</div>
-  <h1>Find The <span>Cheapest Price</span><br>Before You Buy</h1>
-  <p>Compare prices across Konga, Slot, Jumia and trusted Nigerian sellers instantly.</p>
-  <div class="search-container">
-    <div class="search-bar">
-      <input type="text" placeholder="Search for phones, generators, laptops, food..." id="searchInput"/>
-      <button class="search-btn" onclick="handleSearch()">Search</button>
-    </div>
-    <div class="trending-tags">
-      <span class="tag" onclick="searchFor('Tecno Spark 30')">Tecno Spark 30</span>
-      <span class="tag" onclick="searchFor('Generator 3.5KVA')">Generator 3.5KVA</span>
-      <span class="tag" onclick="searchFor('HP Laptop')">HP Laptop</span>
-      <span class="tag" onclick="searchFor('Samsung Galaxy A15')">Samsung A15</span>
-      <span class="tag" onclick="searchFor('Bag of Rice 50kg')">Bag of Rice</span>
-    </div>
-  </div>
-</section>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="search.html">Categories</a>
+      <a href="search.html">Deals</a>
+      <a href="sellers.html">Sellers</a>
+    </nav>
 
-<div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-num">10,000+</div>
-    <div class="stat-label">Products Tracked</div>
+    <div class="nav-actions" id="navActions">
+      <!-- Logged out state (default). Script below swaps this for the user chip if rebixmart_user exists in localStorage. -->
+      <a href="login.html" class="btn btn-ghost" id="loginBtn">Login</a>
+      <a href="signup.html" class="btn btn-solid" id="signupBtn">Sign Up</a>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
   </div>
-  <div class="stat-item">
-    <div class="stat-num">5+</div>
-    <div class="stat-label">Platforms Compared</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">Free</div>
-    <div class="stat-label">Always Free To Use</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">24/7</div>
-    <div class="stat-label">Price Updates</div>
+</header>
+
+<!-- ================= SLIM SEARCH STRIP ================= -->
+<div class="search-strip">
+  <div class="search-strip-inner">
+    <div class="category-select">
+      <span>&#128205;</span>
+      <select id="categorySelect" aria-label="Select category">
+        <option value="">All categories</option>
+        <option value="Phones and Tablets">Phones and Tablets</option>
+        <option value="Generators and Inverters">Generators and Inverters</option>
+        <option value="Laptops and Computers">Laptops and Computers</option>
+        <option value="Food and Groceries">Food and Groceries</option>
+        <option value="Home Appliances">Home Appliances</option>
+        <option value="Fashion and Clothing">Fashion and Clothing</option>
+        <option value="Car Parts">Car Parts</option>
+        <option value="School Supplies">School Supplies</option>
+      </select>
+    </div>
+
+    <form class="search-strip-form" id="heroSearchForm" role="search">
+      <input type="text" id="heroSearchInput" placeholder="Search for phones, laptops, generators..." aria-label="Search for a product" required>
+      <button type="submit" aria-label="Search">&#128269;</button>
+    </form>
   </div>
 </div>
 
-<div class="marquee-section">
+<!-- ================= PROMO BANNER ================= -->
+<div class="promo-banner">
+  <div class="promo-card">
+    <div class="promo-text">
+      <h3>List your products on RebixMart</h3>
+      <p>Reach more buyers as a verified seller and grow your business with us.</p>
+    </div>
+    <a href="sellers.html" class="promo-btn">Become a seller</a>
+  </div>
+</div>
+
+<!-- ================= MARQUEE ================= -->
+<div class="marquee-wrap">
   <div class="marquee-track">
-    <span class="marquee-item">Phones and Tablets</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Generators and Inverters</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Laptops and Computers</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Food and Groceries</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Home Appliances</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Fashion and Clothing</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Car Parts</span><span class="marquee-dot"></span>
-    <span class="marquee-item">School Supplies</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Phones and Tablets</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Generators and Inverters</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Laptops and Computers</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Food and Groceries</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Home Appliances</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Fashion and Clothing</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Car Parts</span><span class="marquee-dot"></span>
-    <span class="marquee-item">School Supplies</span><span class="marquee-dot"></span>
+    <span>Phones and Tablets</span>
+    <span>Generators and Inverters</span>
+    <span>Laptops and Computers</span>
+    <span>Food and Groceries</span>
+    <span>Home Appliances</span>
+    <span>Fashion and Clothing</span>
+    <span>Car Parts</span>
+    <span>School Supplies</span>
+    <span>Phones and Tablets</span>
+    <span>Generators and Inverters</span>
+    <span>Laptops and Computers</span>
+    <span>Food and Groceries</span>
+    <span>Home Appliances</span>
+    <span>Fashion and Clothing</span>
+    <span>Car Parts</span>
+    <span>School Supplies</span>
   </div>
 </div>
 
+<!-- ================= CATEGORIES ================= -->
 <section class="section">
-  <div class="section-header">
-    <h2 class="section-title">Shop By <span>Category</span></h2>
-    <a href="search.html" class="see-all">View All</a>
+  <div class="section-head">
+    <div>
+      <h2>Shop by category</h2>
+      <p>Pick a category to see live price comparisons across every platform we track.</p>
+    </div>
   </div>
-  <div class="categories-grid">
-    <a href="search.html?q=Phones" class="category-card"><span class="category-icon">📱</span><span class="category-name">Phones and Tablets</span></a>
-    <a href="search.html?q=Generator" class="category-card"><span class="category-icon">🔌</span><span class="category-name">Generators and Inverters</span></a>
-    <a href="search.html?q=Laptop" class="category-card"><span class="category-icon">💻</span><span class="category-name">Laptops and Computers</span></a>
-    <a href="search.html?q=Rice" class="category-card"><span class="category-icon">🍚</span><span class="category-name">Food and Groceries</span></a>
-    <a href="search.html?q=Appliances" class="category-card"><span class="category-icon">🏠</span><span class="category-name">Home Appliances</span></a>
-    <a href="search.html?q=Fashion" class="category-card"><span class="category-icon">👗</span><span class="category-name">Fashion and Clothing</span></a>
-    <a href="search.html?q=Car+Parts" class="category-card"><span class="category-icon">🚗</span><span class="category-name">Car Parts</span></a>
-    <a href="search.html?q=School" class="category-card"><span class="category-icon">📚</span><span class="category-name">School Supplies</span></a>
+  <div class="category-grid">
+    <a class="cat-card" href="search.html?category=Phones%20and%20Tablets"><div class="cat-icon">&#128241;</div><div class="cat-name">Phones and Tablets</div></a>
+    <a class="cat-card" href="search.html?category=Generators%20and%20Inverters"><div class="cat-icon">&#128268;</div><div class="cat-name">Generators and Inverters</div></a>
+    <a class="cat-card" href="search.html?category=Laptops%20and%20Computers"><div class="cat-icon">&#128187;</div><div class="cat-name">Laptops and Computers</div></a>
+    <a class="cat-card" href="search.html?category=Food%20and%20Groceries"><div class="cat-icon">&#127859;</div><div class="cat-name">Food and Groceries</div></a>
+    <a class="cat-card" href="search.html?category=Home%20Appliances"><div class="cat-icon">&#127968;</div><div class="cat-name">Home Appliances</div></a>
+    <a class="cat-card" href="search.html?category=Fashion%20and%20Clothing"><div class="cat-icon">&#128087;</div><div class="cat-name">Fashion and Clothing</div></a>
+    <a class="cat-card" href="search.html?category=Car%20Parts"><div class="cat-icon">&#128663;</div><div class="cat-name">Car Parts</div></a>
+    <a class="cat-card" href="search.html?category=School%20Supplies"><div class="cat-icon">&#128218;</div><div class="cat-name">School Supplies</div></a>
   </div>
 </section>
 
-<section class="deals-section">
-  <div class="section-header">
-    <h2 class="section-title">Today's Best <span>Deals</span></h2>
-    <a href="search.html" class="see-all">View All</a>
+<!-- ================= DEALS ================= -->
+<section class="section" style="background:#f9fafb;">
+  <div class="section-head">
+    <div>
+      <h2>Today's best deals</h2>
+      <p>Real price comparisons, updated daily, showing exactly where you save the most.</p>
+    </div>
+    <a href="search.html" class="link-all">View all deals</a>
   </div>
-  <div class="deals-grid">
+  <div class="deals-grid" id="dealsGrid">
+    <!-- Deal cards populated by renderDeals() below using placeholder data until Search Product webhook is connected -->
+  </div>
+</section>
 
-    <div class="deal-card" onclick="goToProduct('Tecno Spark 30','Phones and Tablets','📱',118000,125000,122000)">
-      <div class="deal-img">📱<div class="deal-badge">BEST PRICE</div></div>
-      <div class="deal-body">
-        <div class="deal-name">Tecno Spark 30</div>
-        <div class="price-compare">
-          <div class="price-row best">
-            <span class="platform">Konga</span>
-            <span class="price-amount">118,000</span>
-            <span class="best-label">BEST</span>
-          </div>
-          <div class="price-row other">
-            <span class="platform">Jumia</span>
-            <span class="price-amount">125,000</span>
-          </div>
+<!-- ================= HOW IT WORKS ================= -->
+<section class="section">
+  <div class="section-head">
+    <div>
+      <h2>How RebixMart works</h2>
+      <p>Four steps between you and the best price in Nigeria.</p>
+    </div>
+  </div>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-index">01</div>
+      <h4>Search a product</h4>
+      <p>Type in what you are looking for, from phones to generators.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-index">02</div>
+      <h4>Compare instantly</h4>
+      <p>See prices from every platform we track, side by side.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-index">03</div>
+      <h4>Buy at the best price</h4>
+      <p>Click through to the cheapest trusted seller and complete your purchase.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-index">04</div>
+      <h4>Get price alerts</h4>
+      <p>Set a target price and we notify you the moment it drops.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ALERT BANNER ================= -->
+<section class="section" style="padding-top:0;">
+  <div class="alert-banner">
+    <div class="alert-copy">
+      <h3>Never miss a price drop</h3>
+      <p>Tell us what you want and your target price. We will email you the moment it is available.</p>
+    </div>
+    <form class="alert-form" id="alertForm">
+      <input type="email" id="alertEmail" placeholder="Your email address" required>
+      <input type="text" id="alertProduct" placeholder="Product name" required>
+      <button type="submit">Notify me</button>
+      <div class="alert-msg" id="alertMsg"></div>
+    </form>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="logo-slot" aria-label="RebixMart home">
+          <span class="logo-img-box">
+            <svg viewBox="0 0 76 76" width="36" height="36" aria-hidden="true">
+              <circle cx="20" cy="66" r="6" fill="#ffffff" fill-opacity="0.85"/>
+              <circle cx="52" cy="66" r="6" fill="#ffffff" fill-opacity="0.85"/>
+              <path d="M2 4 H14 L20 46 H60 L68 16 H24" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <g transform="translate(24,10)">
+                <path d="M8 8 V2 a8 8 0 0 1 16 0 V8" fill="none" stroke="#e8792f" stroke-width="4" stroke-linecap="round"/>
+                <rect x="0" y="8" width="32" height="30" rx="4" fill="#e8792f"/>
+                <rect x="4" y="14" width="8" height="18" rx="2" fill="#ffffff" fill-opacity="0.35"/>
+              </g>
+            </svg>
+          </span>
+          <span class="wordmark footer-wordmark">RebixMart</span>
+        </a>
+        <p>Smart choices. Better prices. Trusted sellers. A product of Reborn Tech Global Solutions.</p>
+        <div class="footer-contact">
+          <span>reborntechglobalsolutions@gmail.com</span>
+          <span>WhatsApp: +2348111689782</span>
         </div>
-        <button class="btn-view">View Best Price</button>
+      </div>
+
+      <div class="footer-col">
+        <h5>Categories</h5>
+        <ul>
+          <li><a href="search.html?category=Phones%20and%20Tablets">Phones and Tablets</a></li>
+          <li><a href="search.html?category=Laptops%20and%20Computers">Laptops and Computers</a></li>
+          <li><a href="search.html?category=Home%20Appliances">Home Appliances</a></li>
+          <li><a href="search.html?category=Fashion%20and%20Clothing">Fashion and Clothing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="sellers.html">Become a Seller</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Support</h5>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
       </div>
     </div>
 
-    <div class="deal-card" onclick="goToProduct('Nexus 3.5KVA Generator','Generators and Inverters','🔌',231000,247000,238000)">
-      <div class="deal-img">🔌<div class="deal-badge">SAVE 16,000</div></div>
-      <div class="deal-body">
-        <div class="deal-name">Nexus 3.5KVA Generator</div>
-        <div class="price-compare">
-          <div class="price-row best">
-            <span class="platform">Konga</span>
-            <span class="price-amount">231,000</span>
-            <span class="best-label">BEST</span>
-          </div>
-          <div class="price-row other">
-            <span class="platform">Jumia</span>
-            <span class="price-amount">247,000</span>
-          </div>
-        </div>
-        <button class="btn-view">View Best Price</button>
-      </div>
+    <div class="footer-bottom">
+      2026 RebixMart. All rights reserved. A product of Reborn Tech Global Solutions.
     </div>
+  </div>
+</footer>
 
-    <div class="deal-card" onclick="goToProduct('HP Laptop 15','Laptops and Computers','💻',365000,380000,372000)">
-      <div class="deal-img">💻<div cla
+<script>
+  // ---------- Mobile nav toggle ----------
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  // ---------- Logged in state check ----------
+  // Reads rebixmart_user from localStorage (set by login.html / signup.html).
+  // Never hardcode names here — always pull from real stored data.
+  (function renderAuthState(){
+    const stored = localStorage.getItem('rebixmart_user');
+    if(!stored) return;
+    try{
+      const user = JSON.parse(stored);
+      const navActions = document.getElementById('navActions');
+      const firstName = user.firstName || user.first_name || 'there';
+      const initial = firstName.charAt(0).toUpperCase();
+      navActions.innerHTML = `
+        <a href="dashboard.html" class="user-chip">
+          <span class="avatar-circle">${initial}</span>
+          <span>${firstName}</span>
+        </a>
+      `;
+    }catch(e){
+      // Malformed data in storage — ignore and keep default logged-out nav.
+      console.error('Could not read stored user data', e);
+    }
+  })();
+
+  // ---------- Hero search redirect ----------
+  document.getElementById('heroSearchForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const query = document.getElementById('heroSearchInput').value.trim();
+    const category = document.getElementById('categorySelect').value;
+    if(!query && !category) return;
+    const params = new URLSearchParams();
+    if(query) params.set('q', query);
+    if(category) params.set('category', category);
+    window.location.href = 'search.html?' + params.toString();
+  });
+
+  // ---------- Price alert banner submit ----------
+  // NOTE: webhook URL below is a placeholder. Replace SET_PRICE_ALERT_WEBHOOK_URL
+  // with the real n8n production webhook URL for the "Rebix Set Price Alert" workflow.
+  const SET_PRICE_ALERT_WEBHOOK_URL = 'SET_PRICE_ALERT_WEBHOOK_URL';
+
+  document.getElementById('alertForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const email = document.getElementById('alertEmail').value.trim();
+    const product = document.getElementById('alertProduct').value.trim();
+    const msgEl = document.getElementById('alertMsg');
+    msgEl.textContent = '';
+    msgEl.className = 'alert-msg';
+
+    if(!email || !product){
+      msgEl.textContent = 'Please fill in both fields.';
+      msgEl.classList.add('error');
+      return;
+    }
+
+    if(SET_PRICE_ALERT_WEBHOOK_URL === 'SET_PRICE_ALERT_WEBHOOK_URL'){
+      msgEl.textContent = 'Alert saving is not connected yet.';
+      msgEl.classList.add('error');
+      return;
+    }
+
+    try{
+      const res = await fetch(SET_PRICE_ALERT_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, product_name: product, target_price: null })
+      });
+      if(!res.ok) throw new Error('Request failed');
+      msgEl.textContent = 'You will be notified when the price drops.';
+      msgEl.classList.add('success');
+      document.getElementById('alertForm').reset();
+    }catch(err){
+      msgEl.textContent = 'Something went wrong. Please try again.';
+      msgEl.classList.add('error');
+    }
+  });
+
+  // ---------- Today's Best Deals ----------
+  // Pulls real products from the Search Product webhook. No invented prices,
+  // no invented names — everything here comes from the Google Sheet via n8n.
+  const SEARCH_PRODUCT_WEBHOOK_URL = 'https://newrebix.app.n8n.cloud/webhook/RebixMart';
+
+  function dealCardHTML(p){
+    // Defensive field lookup — tries several likely column/field name variants
+    // since exact n8n output field names weren't confirmed yet.
+    const name = p.product_name || p.name || p.Product_Name || p.title || 'Unnamed product';
+    const category = p.category || p.Category || '';
+    const imageUrl = p.image_url || p.imageUrl || p.image || p['image url'] || p.Image_URL || '';
+    const price = p.best_price || p.kara_price || p.konga_price || p.jumia_price || p.price || p.Price || null;
+    const icon = categoryIcon(category);
+
+    const params = new URLSearchParams({
+      name: name,
+      category: category,
+      icon: icon
+    });
+
+    const imageBlock = imageUrl
+      ? `<img src="${imageUrl}" alt="${name}" style="width:100%;height:100%;object-fit:contain;padding:16px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><span style="display:none;align-items:center;justify-content:center;width:100%;height:100%;">${icon}</span>`
+      : `<span>${icon}</span>`;
+
+    const priceBlock = price
+      ? `<span class="price-now">₦${price}</span>`
+      : `<span class="price-now" style="font-size:15px;color:var(--grey-text);">Price unavailable</span>`;
+
+    return `
+      <a class="deal-card" href="product.html?${params.toString()}">
+        <div class="deal-image">
+          ${imageBlock}
+        </div>
+        <div class="deal-body">
+          <span class="deal-cat">${category}</span>
+          <span class="deal-name">${name}</span>
+          <div class="price-row">${priceBlock}</div>
+          <span class="deal-cta">View Details</span>
+        </div>
+      </a>
+    `;
+  }
+
+  function categoryIcon(category){
+    const map = {
+      'Phones and Tablets':'&#128241;',
+      'Generators and Inverters':'&#128268;',
+      'Laptops and Computers':'&#128187;',
+      'Food and Groceries':'&#127859;',
+      'Home Appliances':'&#127968;',
+      'Fashion and Clothing':'&#128087;',
+      'Car Parts':'&#128663;',
+      'School Supplies':'&#128218;'
+    };
+    return map[category] || '&#128230;';
+  }
+
+  async function renderDeals(){
+    const grid = document.getElementById('dealsGrid');
+    grid.innerHTML = `<p style="grid-column:1/-1;color:var(--grey-text);font-size:14px;">Loading deals...</p>`;
+
+    try{
+      const res = await fetch(SEARCH_PRODUCT_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: '', category: '', limit: 4 })
+      });
+
+      if(!res.ok) throw new Error('Webhook returned status ' + res.status);
+
+      const data = await res.json();
+      console.log('Search Product webhook response:', data);
+
+      // Handles a few common response shapes: a bare array, {products: [...]},
+      // {data: [...]}, or a single n8n item wrapped in {json: {...}}.
+      let products = [];
+      if(Array.isArray(data)) products = data;
+      else if(Array.isArray(data.products)) products = data.products;
+      else if(Array.isArray(data.data)) products = data.data;
+      else if(data.json) products = Array.isArray(data.json) ? data.json : [data.json];
+
+      if(!products.length){
+        grid.innerHTML = `<p style="grid-column:1/-1;color:var(--grey-text);font-size:14px;">
+          No deals available right now. Check the browser console for the raw webhook response.
+        </p>`;
+        return;
+      }
+
+      grid.innerHTML = products.slice(0,4).map(dealCardHTML).join('');
+    }catch(err){
+      console.error('Could not load deals:', err);
+      grid.innerHTML = `<p style="grid-column:1/-1;color:var(--grey-text);font-size:14px;">
+        Could not load deals right now. Check the browser console for details.
+      </p>`;
+    }
+  }
+  renderDeals();
+</script>
+
+</body>
+</html>
