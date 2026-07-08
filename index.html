@@ -1029,7 +1029,7 @@
       const res = await fetch(SEARCH_PRODUCT_WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: '', category: '', limit: 4 })
+        body: JSON.stringify({ query: 'phone', category: '', limit: 4 })
       });
 
       if(!res.ok) throw new Error('Webhook returned status ' + res.status);
