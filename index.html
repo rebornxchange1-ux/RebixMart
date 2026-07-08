@@ -970,40 +970,45 @@
   const SEARCH_PRODUCT_WEBHOOK_URL = 'https://newrebix.app.n8n.cloud/webhook/RebixMart';
 
   function dealCardHTML(p){
-    // Defensive field lookup — tries several likely column/field name variants
-    // since exact n8n output field names weren't confirmed yet.
-    const name = p.product_name || p.name || p.Product_Name || p.title || 'Unnamed product';
-    const category = p.category || p.Category || '';
-    const imageUrl = p.image_url || p.imageUrl || p.image || p['image url'] || p.Image_URL || '';
-    const price = p.best_price || p.kara_price || p.konga_price || p.jumia_price || p.price || p.Price || null;
+    // Matches the CONFIRMED real response structure from your webhook:
+    // product_id, product_name, category, prices[] (platform, price, link),
+    // best_price, best_platform. No image field exists in this data yet —
+    // image support requires image_url to be added in n8n first.
+    const name = p.product_name || 'Unnamed product';
+    const category = p.category || '';
+    const price = p.best_price || null;
+    const platform = p.best_platform || '';
+    const bestLink = (p.prices || []).find(x => x.platform === platform);
+    const buyLink = bestLink ? bestLink.link.replace(/^:\s*/, '').trim() : '#';
     const icon = categoryIcon(category);
 
     const params = new URLSearchParams({
+      id: p.product_id || '',
       name: name,
       category: category,
       icon: icon
     });
 
-    const imageBlock = imageUrl
-      ? `<img src="${imageUrl}" alt="${name}" style="width:100%;height:100%;object-fit:contain;padding:16px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><span style="display:none;align-items:center;justify-content:center;width:100%;height:100%;">${icon}</span>`
-      : `<span>${icon}</span>`;
-
     const priceBlock = price
-      ? `<span class="price-now">₦${price}</span>`
+      ? `<span class="price-now">₦${price.toLocaleString()}</span>${platform ? `<span style="font-size:12px;color:var(--grey-text);margin-left:6px;">via ${platform}</span>` : ''}`
       : `<span class="price-now" style="font-size:15px;color:var(--grey-text);">Price unavailable</span>`;
 
     return `
-      <a class="deal-card" href="product.html?${params.toString()}">
-        <div class="deal-image">
-          ${imageBlock}
+      <div class="deal-card">
+        <a href="product.html?${params.toString()}" style="text-decoration:none;color:inherit;">
+          <div class="deal-image">
+            <span>${icon}</span>
+          </div>
+          <div class="deal-body">
+            <span class="deal-cat">${category}</span>
+            <span class="deal-name">${name}</span>
+            <div class="price-row">${priceBlock}</div>
+          </div>
+        </a>
+        <div class="deal-body" style="padding-top:0;">
+          ${buyLink !== '#' ? `<a href="${buyLink}" target="_blank" rel="noopener" class="deal-cta">Buy Now</a>` : `<span class="deal-cta" style="opacity:0.6;">View Details</span>`}
         </div>
-        <div class="deal-body">
-          <span class="deal-cat">${category}</span>
-          <span class="deal-name">${name}</span>
-          <div class="price-row">${priceBlock}</div>
-          <span class="deal-cta">View Details</span>
-        </div>
-      </a>
+      </div>
     `;
   }
 
