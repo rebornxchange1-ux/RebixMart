@@ -976,6 +976,7 @@
     const category = (p.category || '').toString().trim();
     const imageUrl = (p.image_url || '').toString().trim();
     const price = (p.best_price !== undefined && p.best_price !== null) ? p.best_price : null;
+    const platform = (p.best_platform || '').toString().trim();
     const icon = categoryIcon(category);
 
     // Debug line — remove once images are confirmed working everywhere.
@@ -992,7 +993,7 @@
       : `<span>${icon}</span>`;
 
     const priceBlock = price
-      ? `<span class="price-now">₦${Number(price).toLocaleString('en-NG')}</span>`
+      ? `<span class="price-now">₦${Number(price).toLocaleString('en-NG')}</span>${platform ? ` <span style="font-size:13px;color:var(--grey-text);">via ${platform}</span>` : ''}`
       : `<span class="price-now" style="font-size:15px;color:var(--grey-text);">Price unavailable</span>`;
 
     return `
