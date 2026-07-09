@@ -663,6 +663,7 @@
       <a href="search.html">Categories</a>
       <a href="search.html">Deals</a>
       <a href="sellers.html">Sellers</a>
+      <a href="login.html" id="mobileLoginLink">Login</a>
     </nav>
 
     <div class="nav-actions" id="navActions">
@@ -742,14 +743,14 @@
     </div>
   </div>
   <div class="category-grid">
-    <a class="cat-card" href="search.html?category=Phones%20and%20Tablets"><div class="cat-icon">&#128241;</div><div class="cat-name">Phones and Tablets</div></a>
-    <a class="cat-card" href="search.html?category=Generators%20and%20Inverters"><div class="cat-icon">&#128268;</div><div class="cat-name">Generators and Inverters</div></a>
-    <a class="cat-card" href="search.html?category=Laptops%20and%20Computers"><div class="cat-icon">&#128187;</div><div class="cat-name">Laptops and Computers</div></a>
-    <a class="cat-card" href="search.html?category=Food%20and%20Groceries"><div class="cat-icon">&#127859;</div><div class="cat-name">Food and Groceries</div></a>
-    <a class="cat-card" href="search.html?category=Home%20Appliances"><div class="cat-icon">&#127968;</div><div class="cat-name">Home Appliances</div></a>
-    <a class="cat-card" href="search.html?category=Fashion%20and%20Clothing"><div class="cat-icon">&#128087;</div><div class="cat-name">Fashion and Clothing</div></a>
-    <a class="cat-card" href="search.html?category=Car%20Parts"><div class="cat-icon">&#128663;</div><div class="cat-name">Car Parts</div></a>
-    <a class="cat-card" href="search.html?category=School%20Supplies"><div class="cat-icon">&#128218;</div><div class="cat-name">School Supplies</div></a>
+    <a class="cat-card" href="search.html?category=Phones%20and%20Tablets"><div class="cat-icon"><img src="phones%20and%20tablet.PNG" alt="Phones and Tablets" style="width:48px;height:48px;object-fit:contain;"></div><div class="cat-name">Phones and Tablets</div></a>
+    <a class="cat-card" href="search.html?category=Generators%20and%20Inverters"><div class="cat-icon"><img src="generator.PNG" alt="Generators and Inverters" style="width:48px;height:48px;object-fit:contain;"></div><div class="cat-name">Generators and Inverters</div></a>
+    <a class="cat-card" href="search.html?category=Laptops%20and%20Computers"><div class="cat-icon"><img src="laptop.PNG" alt="Laptops and Computers" style="width:48px;height:48px;object-fit:contain;"></div><div class="cat-name">Laptops and Computers</div></a>
+    <a class="cat-card" href="search.html?category=Food%20and%20Groceries"><div class="cat-icon"><img src="food.PNG" alt="Food and Groceries" style="width:48px;height:48px;object-fit:contain;"></div><div class="cat-name">Food and Groceries</div></a>
+    <a class="cat-card" href="search.html?category=Home%20Appliances"><div class="cat-icon"><img src="home.PNG" alt="Home Appliances" style="width:48px;height:48px;object-fit:contain;"></div><div class="cat-name">Home Appliances</div></a>
+    <a class="cat-card" href="search.html?category=Fashion%20and%20Clothing"><div class="cat-icon"><img src="fashion.PNG" alt="Fashion and Clothing" style="width:48px;height:48px;object-fit:contain;"></div><div class="cat-name">Fashion and Clothing</div></a>
+    <a class="cat-card" href="search.html?category=Car%20Parts"><div class="cat-icon"><img src="car%20parts.PNG" alt="Car Parts" style="width:48px;height:48px;object-fit:contain;"></div><div class="cat-name">Car Parts</div></a>
+    <a class="cat-card" href="search.html?category=School%20Supplies"><div class="cat-icon"><img src="school.PNG" alt="School Supplies" style="width:48px;height:48px;object-fit:contain;"></div><div class="cat-name">School Supplies</div></a>
   </div>
 </section>
 
@@ -905,6 +906,12 @@
           <span>${firstName}</span>
         </a>
       `;
+      // Keep the mobile dropdown consistent with the desktop nav state.
+      const mobileLoginLink = document.getElementById('mobileLoginLink');
+      if(mobileLoginLink){
+        mobileLoginLink.href = 'dashboard.html';
+        mobileLoginLink.textContent = 'Dashboard (' + firstName + ')';
+      }
     }catch(e){
       // Malformed data in storage — ignore and keep default logged-out nav.
       console.error('Could not read stored user data', e);
