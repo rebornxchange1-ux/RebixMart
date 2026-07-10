@@ -408,7 +408,12 @@
   let allResults = [];
 
   // ---------- Fetch from backend ----------
-  async function fetchResults(query, category){
+  // NOTE: category is intentionally NOT sent to the backend. The n8n Code node's
+  // category matching breaks on real sheet data ("phone and tablets" vs "phone and
+  // tablet" vs "Phones and Tablets") since it does not normalize plurals/casing.
+  // Category narrowing is instead handled entirely client-side in applyFiltersAndRender(),
+  // using normalizeCategory() above, which reliably handles those inconsistencies.
+  async function fetchResults(query){
     document.getElementById('resultsList').innerHTML = '<p class="loading-state">Loading products...</p>';
     document.getElementById('resultsCount').textContent = 'Loading results...';
 
@@ -416,7 +421,7 @@
       const res = await fetch(SEARCH_PRODUCT_WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: query || '', category: category || '' })
+        body: JSON.stringify({ query: query || '', category: '' })
       });
 
       if(!res.ok) throw new Error('Webhook returned status ' + res.status);
@@ -435,6 +440,25 @@
     }
   }
 
+  // Normalizes category text for comparison so that inconsistent sheet data
+  // ("phone and tablets", "phone and tablet", "Phones and Tablets", etc.)
+  // all match the same dropdown/category filter selection.
+  function normalizeCategory(str){
+    return (str || '')
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s]/g, '')
+      .split(/\s+/)
+      .filter(Boolean)
+      .map(function(word){
+        if(word.length <= 3) return word;
+        if(word.endsWith('ies')) return word.slice(0, -3) + 'y'; // supplies -> supply
+        if(word.endsWith('s')) return word.slice(0, -1);          // tablets -> tablet
+        return word;
+      })
+      .join(' ');
+  }
+
   // ---------- Filters + sort ----------
   function applyFiltersAndRender(){
     const checkedPlatforms = Array.from(document.querySelectorAll('.platform-filter:checked')).map(el => el.value);
@@ -442,9 +466,10 @@
     const maxPrice = parseFloat(document.getElementById('maxPrice').value);
     const categoryFilter = document.getElementById('categoryFilterSelect').value;
     const sortBy = document.getElementById('sortSelect').value;
+    const normalizedCategoryFilter = normalizeCategory(categoryFilter);
 
     let filtered = allResults.filter(p => {
-      if(categoryFilter && (p.category || '').toLowerCase() !== categoryFilter.toLowerCase()) return false;
+      if(categoryFilter && normalizeCategory(p.category) !== normalizedCategoryFilter) return false;
 
       if(checkedPlatforms.length){
         const hasPlatform = (p.prices || []).some(pr => checkedPlatforms.includes(pr.platform));
@@ -629,7 +654,7 @@
   });
 
   // ---------- Initial load ----------
-  fetchResults(initialQuery, initialCategory);
+  fetchResults(initialQuery);
 </script>
 </body>
 </html>
