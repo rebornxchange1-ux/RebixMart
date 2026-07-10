@@ -3,765 +3,633 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Search Results - RebixMart</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Search results | RebixMart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --darkblue: #1e3a5f;
-    --darkblue2: #162d4a;
-    --darkblue-light: #2563a8;
-    --purple: #7C3AED;
-    --black: #0a0a0f;
-    --white: #ffffff;
-    --grey: #f4f4f8;
-    --border: #e5e7eb;
-    --text: #374151;
-    --muted: #6b7280;
+  :root{
+    --navy:#1e3a5f;
+    --navy-deep:#152a45;
+    --black:#0a0a0f;
+    --white:#ffffff;
+    --grey-line:#e7e9ee;
+    --grey-text:#5b6472;
+    --savings-green:#1e7a4c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:'Outfit',sans-serif;
+    color:var(--black);
+    background:var(--white);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:0.5px;}
+  img{max-width:100%;display:block;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:12px 22px;border-radius:8px;font-weight:600;font-size:15px;
+    cursor:pointer;border:none;transition:opacity 0.15s;
+  }
+  .btn:hover{opacity:0.9;}
+  .btn-solid{background:var(--navy);color:var(--white);}
+  .btn-ghost{background:transparent;color:var(--navy);border:1.5px solid var(--navy);}
+  .btn-outline-sm{background:var(--white);color:var(--navy);border:1.5px solid var(--grey-line);padding:8px 14px;font-size:13px;border-radius:6px;}
+  .btn-outline-sm:hover{border-color:var(--navy);}
+
+  /* ===== HEADER (matches index.html) ===== */
+  header{
+    border-bottom:1px solid var(--grey-line);
+    position:sticky;top:0;background:var(--white);z-index:50;
+  }
+  .header-inner{
+    max-width:1280px;margin:0 auto;padding:16px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+    position:relative;
+  }
+  .logo{display:flex;align-items:center;gap:10px;}
+  .logo-img-box{height:36px;width:36px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  /* Bebas Neue only has uppercase letterforms — force the brand name
+     back to a normal mixed-case font wherever it's used as plain text. */
+  .brand-name{font-family:'Outfit',sans-serif !important;font-weight:700;letter-spacing:normal;}
+  .logo .wordmark{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--navy);letter-spacing:1px;}
+  .nav-links{display:flex;align-items:center;gap:28px;font-weight:500;font-size:15px;}
+  .nav-links a:hover{color:var(--navy);}
+  .nav-actions{display:flex;align-items:center;gap:12px;}
+  .nav-toggle{display:none;background:none;border:none;font-size:24px;cursor:pointer;color:var(--navy);}
+  .user-chip{display:flex;align-items:center;gap:8px;font-weight:600;}
+  .avatar-circle{
+    width:32px;height:32px;border-radius:50%;background:var(--navy);color:var(--white);
+    display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* ===== PAGE HEADER / SEARCH BAR ===== */
+  .search-hero{background:var(--navy);padding:32px 24px;}
+  .search-hero-inner{max-width:1280px;margin:0 auto;}
+  .search-hero h1{color:var(--white);font-size:32px;margin-bottom:14px;}
+  .search-form{display:flex;gap:10px;max-width:700px;}
+  .search-form input{
+    flex:1;padding:14px 16px;border-radius:8px;border:none;font-size:15px;font-family:inherit;
+  }
+  .search-form button{border-radius:8px;}
 
-  body {
-    font-family: 'Outfit', sans-serif;
-    background: var(--grey);
-    color: var(--black);
-    overflow-x: hidden;
+  /* ===== LAYOUT ===== */
+  .results-wrap{
+    max-width:1280px;margin:0 auto;padding:28px 24px 60px;
+    display:grid;grid-template-columns:240px 1fr;gap:28px;
+  }
+  .filters{border:1px solid var(--grey-line);border-radius:10px;padding:20px;height:fit-content;position:sticky;top:90px;}
+  .filters h3{font-size:16px;font-family:'Outfit',sans-serif;font-weight:700;margin-bottom:14px;}
+  .filter-group{margin-bottom:20px;}
+  .filter-group label{display:block;font-size:13px;color:var(--grey-text);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;}
+  .filter-option{display:flex;align-items:center;gap:8px;font-size:14px;padding:6px 0;cursor:pointer;}
+  .filter-option input{cursor:pointer;}
+  .filter-group input[type="number"]{
+    width:100%;padding:8px 10px;border:1px solid var(--grey-line);border-radius:6px;font-family:inherit;font-size:14px;
+  }
+  .price-range-row{display:flex;gap:8px;align-items:center;}
+  .clear-filters{font-size:13px;color:var(--navy);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;padding:0;}
+
+  .results-main{min-width:0;}
+  .results-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px;}
+  .results-count{font-size:14px;color:var(--grey-text);}
+  .sort-select{
+    padding:9px 12px;border:1px solid var(--grey-line);border-radius:6px;font-family:inherit;font-size:14px;background:var(--white);
   }
 
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--black);
-    padding: 0 40px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(30,58,95,0.4);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  .result-card{
+    border:1px solid var(--grey-line);border-radius:12px;padding:18px;margin-bottom:16px;
+    display:grid;grid-template-columns:110px 1fr;gap:18px;
   }
-
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
+  .result-image{
+    width:110px;height:110px;border-radius:8px;background:#f2f4f7;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
   }
-
-  .logo-icon {
-    width: 36px;
-    height: 36px;
-    background: var(--darkblue);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
+  .result-image img{width:100%;height:100%;object-fit:cover;}
+  .result-body{min-width:0;}
+  .result-cat-tag{
+    display:inline-block;font-size:11px;font-weight:700;color:var(--navy);
+    background:#eef2f7;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;
   }
-
-  .logo-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+  .result-name{font-size:18px;font-weight:700;margin-bottom:10px;}
+  .price-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+  .price-chip{
+    display:flex;align-items:center;gap:6px;border:1px solid var(--grey-line);border-radius:8px;padding:7px 12px;font-size:13px;
   }
-
-  .logo-rebix { color: white; }
-  .logo-mart { color: var(--darkblue-light); }
-
-  .nav-search {
-    flex: 1;
-    max-width: 500px;
-    margin: 0 32px;
-    display: flex;
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 2px solid var(--darkblue);
+  .price-chip.best{border-color:var(--savings-green);background:#f0f9f4;}
+  .price-chip .plat-name{color:var(--grey-text);font-weight:600;}
+  .price-chip .plat-price{font-weight:700;}
+  .best-tag{
+    background:var(--savings-green);color:var(--white);font-size:10px;font-weight:700;
+    padding:2px 7px;border-radius:20px;text-transform:uppercase;letter-spacing:0.5px;
   }
+  .savings-line{font-size:13px;color:var(--savings-green);font-weight:600;margin-bottom:14px;}
+  .result-actions{display:flex;flex-wrap:wrap;gap:10px;}
 
-  .nav-search input {
-    flex: 1;
-    padding: 10px 16px;
-    border: none;
-    outline: none;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    color: var(--black);
+  .empty-state, .loading-state{
+    text-align:center;padding:60px 20px;color:var(--grey-text);
   }
+  .empty-state h3{font-family:'Outfit',sans-serif;font-size:18px;color:var(--black);margin-bottom:8px;}
 
-  .nav-search button {
-    background: var(--darkblue);
-    border: none;
-    padding: 10px 20px;
-    color: white;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
+  /* ===== ALERT MODAL ===== */
+  .modal-overlay{
+    display:none;position:fixed;inset:0;background:rgba(10,10,15,0.55);z-index:200;
+    align-items:center;justify-content:center;padding:20px;
   }
-
-  .nav-actions { display: flex; gap: 10px; }
-
-  .btn-login {
-    background: transparent;
-    border: 1px solid rgba(30,58,95,0.6);
-    color: white;
-    padding: 7px 16px;
-    border-radius: 8px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 13px;
-    cursor: pointer;
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    background:var(--white);border-radius:12px;padding:28px;max-width:400px;width:100%;
   }
-
-  .btn-signup {
-    background: var(--darkblue);
-    border: none;
-    color: white;
-    padding: 7px 16px;
-    border-radius: 8px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
+  .modal-box h3{font-family:'Outfit',sans-serif;font-size:18px;margin-bottom:6px;}
+  .modal-box p{font-size:14px;color:var(--grey-text);margin-bottom:18px;}
+  .modal-box input{
+    width:100%;padding:11px 12px;border:1px solid var(--grey-line);border-radius:7px;
+    font-family:inherit;font-size:14px;margin-bottom:12px;
   }
+  .modal-actions{display:flex;gap:10px;margin-top:8px;}
+  .modal-msg{font-size:13px;padding:10px 12px;border-radius:7px;margin-bottom:12px;display:none;}
+  .modal-msg.show{display:block;}
+  .modal-msg.success{background:#f0f9f4;color:var(--savings-green);}
+  .modal-msg.error{background:#fdeeee;color:#b3261e;}
+  .modal-close{position:absolute;top:16px;right:18px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--grey-text);}
+  .modal-box{position:relative;}
 
-  .results-header {
-    background: var(--darkblue);
-    padding: 20px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
+  /* ===== FOOTER (matches index.html) ===== */
+  footer{background:var(--black);color:#c8ccd4;padding:50px 24px 24px;margin-top:40px;}
+  .footer-inner{max-width:1280px;margin:0 auto;}
+  .footer-top{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:32px;padding-bottom:30px;border-bottom:1px solid #2a2a35;}
+  .footer-col h4{color:var(--white);font-size:14px;margin-bottom:14px;font-family:'Outfit',sans-serif;}
+  .footer-col a, .footer-col p{display:block;color:#9aa0ab;font-size:14px;margin-bottom:10px;}
+  .footer-brand .wordmark{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--white);}
+  .footer-bottom{padding-top:18px;font-size:13px;color:#7d828d;text-align:center;}
 
-  .results-info h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 24px;
-    color: white;
-    letter-spacing: 2px;
-  }
-
-  .results-info p { color: rgba(255,255,255,0.7); font-size: 13px; margin-top: 2px; }
-  .results-info span { color: white; font-weight: 700; }
-
-  .sort-bar { display: flex; align-items: center; gap: 10px; }
-  .sort-label { color: rgba(255,255,255,0.7); font-size: 13px; }
-
-  .sort-select {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 13px;
-    cursor: pointer;
-    outline: none;
-  }
-
-  .main-layout {
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    gap: 24px;
-    padding: 24px 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .filters-panel {
-    background: white;
-    border-radius: 16px;
-    padding: 24px;
-    height: fit-content;
-    border: 1px solid var(--border);
-    position: sticky;
-    top: 90px;
-  }
-
-  .filter-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    letter-spacing: 1px;
-    color: var(--darkblue);
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid var(--darkblue);
-  }
-
-  .filter-group { margin-bottom: 24px; }
-
-  .filter-group-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--black);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-  }
-
-  .filter-option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 0;
-    cursor: pointer;
-    font-size: 14px;
-    color: var(--text);
-    transition: color 0.2s;
-  }
-
-  .filter-option:hover { color: var(--darkblue); }
-
-  .filter-option input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    accent-color: var(--darkblue);
-    cursor: pointer;
-  }
-
-  .filter-divider { height: 1px; background: var(--border); margin: 16px 0; }
-
-  .price-range { display: flex; gap: 8px; align-items: center; }
-
-  .price-input {
-    flex: 1;
-    padding: 8px 10px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 13px;
-    outline: none;
-    color: var(--black);
-  }
-
-  .price-input:focus { border-color: var(--darkblue); }
-
-  .btn-apply-filter {
-    width: 100%;
-    background: var(--darkblue);
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: background 0.2s;
-  }
-
-  .btn-apply-filter:hover { background: var(--darkblue2); }
-
-  .results-grid { display: flex; flex-direction: column; gap: 16px; }
-
-  .product-card {
-    background: white;
-    border-radius: 16px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    transition: all 0.25s;
-    display: grid;
-    grid-template-columns: 180px 1fr auto;
-  }
-
-  .product-card:hover {
-    border-color: var(--darkblue);
-    box-shadow: 0 8px 30px rgba(30,58,95,0.12);
-    transform: translateY(-2px);
-  }
-
-  .product-img {
-    background: linear-gradient(135deg, var(--darkblue2), var(--darkblue));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 56px;
-    min-height: 160px;
-    position: relative;
-  }
-
-  .product-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: var(--darkblue);
-    color: white;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 100px;
-    letter-spacing: 0.5px;
-  }
-
-  .product-info {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .product-name { font-size: 17px; font-weight: 700; color: var(--black); margin-bottom: 6px; line-height: 1.3; }
-
-  .product-category {
-    display: inline-block;
-    background: rgba(30,58,95,0.08);
-    color: var(--darkblue);
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 100px;
-    margin-bottom: 14px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-
-  .price-list { display: flex; flex-direction: column; gap: 6px; }
-
-  .price-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
-
-  .price-platform { color: var(--muted); font-weight: 500; min-width: 60px; }
-  .price-value { font-weight: 700; color: var(--black); font-size: 14px; }
-  .price-item.best-price .price-platform { color: var(--darkblue); font-weight: 700; }
-  .price-item.best-price .price-value { color: var(--darkblue); font-size: 16px; }
-
-  .best-tag {
-    background: var(--darkblue);
-    color: white;
-    font-size: 9px;
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 4px;
-    letter-spacing: 0.5px;
-  }
-
-  .savings-tag {
-    background: #dcfce7;
-    color: #15803d;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 100px;
-    margin-top: 8px;
-    display: inline-block;
-  }
-
-  .product-actions {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 10px;
-    border-left: 1px solid var(--border);
-    min-width: 180px;
-  }
-
-  .best-price-big {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    color: var(--darkblue);
-    letter-spacing: 1px;
-    text-align: right;
-    line-height: 1;
-  }
-
-  .best-price-label { font-size: 11px; color: var(--muted); text-align: right; margin-top: 2px; margin-bottom: 10px; }
-
-  .btn-buy-now {
-    width: 100%;
-    background: var(--darkblue);
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s;
-    white-space: nowrap;
-  }
-
-  .btn-buy-now:hover { background: var(--darkblue2); }
-
-  .btn-set-alert {
-    width: 100%;
-    background: transparent;
-    color: var(--darkblue);
-    border: 1px solid var(--darkblue);
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-
-  .btn-set-alert:hover { background: var(--darkblue); color: white; }
-
-  .btn-view-detail {
-    width: 100%;
-    background: transparent;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 8px 20px;
-    border-radius: 10px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-view-detail:hover { border-color: var(--darkblue); color: var(--darkblue); }
-
-  .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
-
-  .page-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: white;
-    color: var(--black);
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .page-btn.active { background: var(--darkblue); color: white; border-color: var(--darkblue); }
-  .page-btn:hover:not(.active) { border-color: var(--darkblue); color: var(--darkblue); }
-
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 200;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .modal-overlay.show { display: flex; }
-
-  .modal {
-    background: white;
-    border-radius: 20px;
-    padding: 32px;
-    max-width: 420px;
-    width: 90%;
-    position: relative;
-  }
-
-  .modal h3 { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 1px; color: var(--darkblue); margin-bottom: 6px; }
-  .modal p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
-
-  .modal-input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    outline: none;
-    margin-bottom: 12px;
-    color: var(--black);
-  }
-
-  .modal-input:focus { border-color: var(--darkblue); }
-  .modal-actions { display: flex; gap: 10px; }
-
-  .btn-modal-confirm {
-    flex: 1;
-    background: var(--darkblue);
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 10px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-
-  .btn-modal-cancel {
-    flex: 1;
-    background: var(--grey);
-    color: var(--black);
-    border: none;
-    padding: 12px;
-    border-radius: 10px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: var(--grey);
-    border: none;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 0 16px; }
-    .nav-search { display: none; }
-    .main-layout { grid-template-columns: 1fr; padding: 16px; }
-    .filters-panel { position: static; }
-    .product-card { grid-template-columns: 120px 1fr; }
-    .product-actions { display: none; }
-    .results-header { padding: 16px 20px; }
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:768px){
+    .nav-links{
+      position:absolute;top:100%;left:0;right:0;background:var(--white);
+      flex-direction:column;gap:0;padding:8px 24px 16px;border-bottom:1px solid var(--grey-line);display:none;
+    }
+    .nav-links.open{display:flex;}
+    .nav-links a{padding:12px 0;border-bottom:1px solid var(--grey-line);}
+    .nav-links a:last-child{border-bottom:none;}
+    .nav-toggle{display:block;}
+    .nav-actions .btn-ghost{display:none;}
+    .results-wrap{grid-template-columns:1fr;}
+    .filters{position:static;}
+    .result-card{grid-template-columns:80px 1fr;}
+    .result-image{width:80px;height:80px;}
+    .footer-top{grid-template-columns:1fr 1fr;}
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">
-    <div class="logo-icon">🛒</div>
-    <div class="logo-text">
-      <span class="logo-rebix">REBIX</span><span class="logo-mart">MART</span>
-    </div>
-  </a>
-  <div class="nav-search">
-    <input type="text" id="navSearch" placeholder="Search for any product..." value="Tecno Spark 30"/>
-    <button onclick="doSearch()">Search</button>
-  </div>
-  <div class="nav-actions">
-    <button class="btn-login">Login</button>
-    <button class="btn-signup">Sign Up</button>
-  </div>
-</nav>
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-img-box">
+        <svg viewBox="0 0 76 76" width="36" height="36" aria-hidden="true">
+          <circle cx="20" cy="66" r="6" fill="#0a0a0f"/>
+          <circle cx="52" cy="66" r="6" fill="#0a0a0f"/>
+          <path d="M2 4 H14 L20 46 H60 L68 16 H24" fill="none" stroke="#1e3a5f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <g transform="translate(24,10)">
+            <path d="M8 8 V2 a8 8 0 0 1 16 0 V8" fill="none" stroke="#c8501f" stroke-width="4" stroke-linecap="round"/>
+            <rect x="0" y="8" width="32" height="30" rx="4" fill="#e8792f"/>
+            <rect x="4" y="14" width="8" height="18" rx="2" fill="#ffffff" fill-opacity="0.35"/>
+          </g>
+        </svg>
+      </span>
+      <span class="wordmark brand-name">RebixMart</span>
+    </a>
 
-<div class="results-header">
-  <div class="results-info">
-    <h2>Search Results</h2>
-    <p>Showing <span id="resultCount">3</span> results for <span id="searchQuery">"Tecno Spark 30"</span></p>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="search.html">Categories</a>
+      <a href="search.html">Deals</a>
+      <a href="sellers.html">Sellers</a>
+      <a href="login.html" id="mobileLoginLink">Login</a>
+    </nav>
+
+    <div class="nav-actions" id="navActions">
+      <a href="login.html" class="btn btn-ghost" id="loginBtn">Login</a>
+      <a href="signup.html" class="btn btn-solid" id="signupBtn">Sign Up</a>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
   </div>
-  <div class="sort-bar">
-    <span class="sort-label">Sort by:</span>
-    <select class="sort-select" onchange="sortResults(this.value)">
-      <option value="best">Best Price First</option>
-      <option value="lowest">Lowest Price</option>
-      <option value="highest">Highest Price</option>
-      <option value="savings">Biggest Savings</option>
-    </select>
+</header>
+
+<!-- ================= SEARCH HERO ================= -->
+<div class="search-hero">
+  <div class="search-hero-inner">
+    <h1 id="pageHeading">Search results</h1>
+    <form class="search-form" id="searchForm">
+      <input type="text" id="searchInput" placeholder="Search for phones, laptops, generators...">
+      <button type="submit" class="btn btn-solid">Search</button>
+    </form>
   </div>
 </div>
 
-<div class="main-layout">
-  <aside class="filters-panel">
-    <div class="filter-title">Filter Results</div>
+<!-- ================= RESULTS ================= -->
+<div class="results-wrap">
+  <aside class="filters">
+    <h3>Filters</h3>
+
     <div class="filter-group">
-      <div class="filter-group-title">Platform</div>
-      <label class="filter-option"><input type="checkbox" checked> Konga</label>
-      <label class="filter-option"><input type="checkbox" checked> Jumia</label>
-      <label class="filter-option"><input type="checkbox" checked> Slot.ng</label>
-      <label class="filter-option"><input type="checkbox" checked> Verified Sellers</label>
+      <label>Platform</label>
+      <label class="filter-option"><input type="checkbox" class="platform-filter" value="Jumia"> Jumia</label>
+      <label class="filter-option"><input type="checkbox" class="platform-filter" value="Konga"> Konga</label>
+      <label class="filter-option"><input type="checkbox" class="platform-filter" value="Kara"> Kara</label>
     </div>
-    <div class="filter-divider"></div>
+
     <div class="filter-group">
-      <div class="filter-group-title">Price Range</div>
-      <div class="price-range">
-        <input type="text" class="price-input" placeholder="Min"/>
-        <span style="color:var(--muted)">to</span>
-        <input type="text" class="price-input" placeholder="Max"/>
+      <label>Price range (NGN)</label>
+      <div class="price-range-row">
+        <input type="number" id="minPrice" placeholder="Min">
+        <span>-</span>
+        <input type="number" id="maxPrice" placeholder="Max">
       </div>
-      <button class="btn-apply-filter">Apply Filter</button>
     </div>
-    <div class="filter-divider"></div>
+
     <div class="filter-group">
-      <div class="filter-group-title">Category</div>
-      <label class="filter-option"><input type="checkbox" checked> Phones and Tablets</label>
-      <label class="filter-option"><input type="checkbox"> Laptops</label>
-      <label class="filter-option"><input type="checkbox"> Accessories</label>
+      <label>Category</label>
+      <select id="categoryFilterSelect" style="width:100%;padding:9px 10px;border:1px solid var(--grey-line);border-radius:6px;font-family:inherit;font-size:14px;">
+        <option value="">All categories</option>
+        <option value="Phones and Tablets">Phones and Tablets</option>
+        <option value="Generators and Inverters">Generators and Inverters</option>
+        <option value="Laptops and Computers">Laptops and Computers</option>
+        <option value="Food and Groceries">Food and Groceries</option>
+        <option value="Home Appliances">Home Appliances</option>
+        <option value="Fashion and Clothing">Fashion and Clothing</option>
+        <option value="Car Parts">Car Parts</option>
+        <option value="School Supplies">School Supplies</option>
+      </select>
     </div>
+
+    <button class="clear-filters" id="clearFiltersBtn">Clear all filters</button>
   </aside>
 
-  <div>
-    <div class="results-grid" id="resultsGrid">
-
-      <div class="product-card">
-        <div class="product-img">📱<div class="product-badge">BEST DEAL</div></div>
-        <div class="product-info">
-          <div>
-            <div class="product-name">Tecno Spark 30</div>
-            <span class="product-category">Phones and Tablets</span>
-            <div class="price-list">
-              <div class="price-item best-price">
-                <span class="price-platform">Konga</span>
-                <span class="price-value">118,000</span>
-                <span class="best-tag">BEST</span>
-              </div>
-              <div class="price-item">
-                <span class="price-platform">Jumia</span>
-                <span class="price-value">125,000</span>
-              </div>
-              <div class="price-item">
-                <span class="price-platform">Slot.ng</span>
-                <span class="price-value">122,000</span>
-              </div>
-            </div>
-          </div>
-          <div class="savings-tag">You save 7,000 buying on Konga</div>
-        </div>
-        <div class="product-actions">
-          <div>
-            <div class="best-price-big">118,000</div>
-            <div class="best-price-label">Best price on Konga</div>
-          </div>
-          <button class="btn-buy-now" onclick="window.open('https://konga.com','_blank')">Buy on Konga</button>
-          <button class="btn-set-alert" onclick="openAlert('Tecno Spark 30')">Set Price Alert</button>
-          <button class="btn-view-detail" onclick="window.location.href='product.html'">View Details</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-img">📱</div>
-        <div class="product-info">
-          <div>
-            <div class="product-name">Tecno Spark 30 Pro</div>
-            <span class="product-category">Phones and Tablets</span>
-            <div class="price-list">
-              <div class="price-item best-price">
-                <span class="price-platform">Jumia</span>
-                <span class="price-value">155,000</span>
-                <span class="best-tag">BEST</span>
-              </div>
-              <div class="price-item">
-                <span class="price-platform">Konga</span>
-                <span class="price-value">162,000</span>
-              </div>
-              <div class="price-item">
-                <span class="price-platform">Slot.ng</span>
-                <span class="price-value">160,000</span>
-              </div>
-            </div>
-          </div>
-          <div class="savings-tag">You save 7,000 buying on Jumia</div>
-        </div>
-        <div class="product-actions">
-          <div>
-            <div class="best-price-big">155,000</div>
-            <div class="best-price-label">Best price on Jumia</div>
-          </div>
-          <button class="btn-buy-now" onclick="window.open('https://jumia.com.ng','_blank')">Buy on Jumia</button>
-          <button class="btn-set-alert" onclick="openAlert('Tecno Spark 30 Pro')">Set Price Alert</button>
-          <button class="btn-view-detail" onclick="window.location.href='product.html'">View Details</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-img">📱</div>
-        <div class="product-info">
-          <div>
-            <div class="product-name">Tecno Spark 30C</div>
-            <span class="product-category">Phones and Tablets</span>
-            <div class="price-list">
-              <div class="price-item best-price">
-                <span class="price-platform">Slot.ng</span>
-                <span class="price-value">98,000</span>
-                <span class="best-tag">BEST</span>
-              </div>
-              <div class="price-item">
-                <span class="price-platform">Konga</span>
-                <span class="price-value">105,000</span>
-              </div>
-              <div class="price-item">
-                <span class="price-platform">Jumia</span>
-                <span class="price-value">108,000</span>
-              </div>
-            </div>
-          </div>
-          <div class="savings-tag">You save 10,000 buying on Slot.ng</div>
-        </div>
-        <div class="product-actions">
-          <div>
-            <div class="best-price-big">98,000</div>
-            <div class="best-price-label">Best price on Slot.ng</div>
-          </div>
-          <button class="btn-buy-now" onclick="window.open('https://slot.ng','_blank')">Buy on Slot.ng</button>
-          <button class="btn-set-alert" onclick="openAlert('Tecno Spark 30C')">Set Price Alert</button>
-          <button class="btn-view-detail" onclick="window.location.href='product.html'">View Details</button>
-        </div>
-      </div>
-
+  <main class="results-main">
+    <div class="results-head">
+      <span class="results-count" id="resultsCount">Loading results...</span>
+      <select class="sort-select" id="sortSelect">
+        <option value="best">Sort: Best price</option>
+        <option value="low">Sort: Lowest price</option>
+        <option value="high">Sort: Highest price</option>
+        <option value="savings">Sort: Biggest savings</option>
+      </select>
     </div>
 
-    <div class="pagination">
-      <button class="page-btn active">1</button>
-      <button class="page-btn">2</button>
-      <button class="page-btn">3</button>
-      <button class="page-btn">Next</button>
+    <div id="resultsList">
+      <p class="loading-state">Loading products...</p>
     </div>
-  </div>
+  </main>
 </div>
 
+<!-- ================= PRICE ALERT MODAL ================= -->
 <div class="modal-overlay" id="alertModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeAlert()">x</button>
-    <h3>Set Price Alert</h3>
-    <p id="alertProductName">Get notified when price drops to your target.</p>
-    <input type="email" class="modal-input" placeholder="Your email address"/>
-    <input type="text" class="modal-input" placeholder="Target price e.g. 100000" id="targetPrice"/>
+  <div class="modal-box">
+    <button class="modal-close" id="alertModalClose">&times;</button>
+    <h3 id="alertModalTitle">Set a price alert</h3>
+    <p>We will email you the moment this product drops to your target price.</p>
+    <div class="modal-msg" id="alertModalMsg"></div>
+    <input type="email" id="alertEmail" placeholder="Your email address">
+    <input type="number" id="alertTargetPrice" placeholder="Target price (NGN)">
     <div class="modal-actions">
-      <button class="btn-modal-confirm" onclick="confirmAlert()">Set Alert</button>
-      <button class="btn-modal-cancel" onclick="closeAlert()">Cancel</button>
+      <button class="btn btn-solid" id="alertSubmitBtn" style="flex:1;">Set alert</button>
     </div>
   </div>
 </div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col footer-brand">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+          <span class="logo-img-box">
+            <svg viewBox="0 0 76 76" width="32" height="32" aria-hidden="true">
+              <circle cx="20" cy="66" r="6" fill="#ffffff" fill-opacity="0.85"/>
+              <circle cx="52" cy="66" r="6" fill="#ffffff" fill-opacity="0.85"/>
+              <path d="M2 4 H14 L20 46 H60 L68 16 H24" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <g transform="translate(24,10)">
+                <path d="M8 8 V2 a8 8 0 0 1 16 0 V8" fill="none" stroke="#e8792f" stroke-width="4" stroke-linecap="round"/>
+                <rect x="0" y="8" width="32" height="30" rx="4" fill="#e8792f"/>
+                <rect x="4" y="14" width="8" height="18" rx="2" fill="#ffffff" fill-opacity="0.35"/>
+              </g>
+            </svg>
+          </span>
+          <span class="wordmark brand-name">RebixMart</span>
+        </div>
+        <p style="margin-top:12px;">Smart choices. Better prices. Trusted sellers.</p>
+        <p>reborntechglobalsolutions@gmail.com</p>
+        <p>WhatsApp: +2348111689782</p>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <a href="search.html?category=Phones%20and%20Tablets">Phones and Tablets</a>
+        <a href="search.html?category=Laptops%20and%20Computers">Laptops and Computers</a>
+        <a href="search.html?category=Home%20Appliances">Home Appliances</a>
+        <a href="search.html?category=Fashion%20and%20Clothing">Fashion and Clothing</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="index.html">Home</a>
+        <a href="sellers.html">Sellers</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="mailto:reborntechglobalsolutions@gmail.com">Contact us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      2026 RebixMart. All rights reserved. A product of Reborn Tech Global Solutions.
+    </div>
+  </div>
+</footer>
 
 <script>
-  const params = new URLSearchParams(window.location.search);
-  const query = params.get('q') || 'Tecno Spark 30';
-  document.getElementById('searchQuery').textContent = '"' + query + '"';
-  document.getElementById('navSearch').value = query;
+  // Confirmed working webhook (same as index.html — tested and verified July 2026).
+  const SEARCH_PRODUCT_WEBHOOK_URL = 'https://newrebix.app.n8n.cloud/webhook/RebixMart';
 
-  function doSearch() {
-    const q = document.getElementById('navSearch').value.trim();
-    if (q) window.location.href = 'search.html?q=' + encodeURIComponent(q);
-  }
+  const SET_PRICE_ALERT_WEBHOOK_URL = 'https://newrebix.app.n8n.cloud/webhook/set-alart';
 
-  document.getElementById('navSearch').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') doSearch();
+  // ---------- Mobile nav toggle ----------
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', function(){
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
   });
 
-  function openAlert(productName) {
-    document.getElementById('alertProductName').textContent =
-      'Get notified when ' + productName + ' drops to your target price.';
-    document.getElementById('alertModal').classList.add('show');
+  // ---------- Logged in state check (same logic as index.html) ----------
+  (function renderAuthState(){
+    const stored = localStorage.getItem('rebixmart_user');
+    if(!stored) return;
+    try{
+      const user = JSON.parse(stored);
+      const navActions = document.getElementById('navActions');
+      const firstName = user.firstName || user.first_name || 'there';
+      const initial = firstName.charAt(0).toUpperCase();
+      navActions.innerHTML = `
+        <a href="dashboard.html" class="user-chip">
+          <span class="avatar-circle">${initial}</span>
+          <span>${firstName}</span>
+        </a>
+      `;
+      const mobileLoginLink = document.getElementById('mobileLoginLink');
+      if(mobileLoginLink){
+        mobileLoginLink.href = 'dashboard.html';
+        mobileLoginLink.textContent = 'Dashboard (' + firstName + ')';
+      }
+    }catch(e){
+      console.error('Could not read stored user data', e);
+    }
+  })();
+
+  // ---------- Read URL params ----------
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialQuery = urlParams.get('q') || '';
+  const initialCategory = urlParams.get('category') || '';
+
+  document.getElementById('searchInput').value = initialQuery;
+  document.getElementById('categoryFilterSelect').value = initialCategory;
+
+  if(initialQuery){
+    document.getElementById('pageHeading').textContent = 'Results for "' + initialQuery + '"';
+  } else if(initialCategory){
+    document.getElementById('pageHeading').textContent = initialCategory;
   }
 
-  function closeAlert() {
-    document.getElementById('alertModal').classList.remove('show');
+  // ---------- State ----------
+  let allResults = [];
+
+  // ---------- Fetch from backend ----------
+  async function fetchResults(query, category){
+    document.getElementById('resultsList').innerHTML = '<p class="loading-state">Loading products...</p>';
+    document.getElementById('resultsCount').textContent = 'Loading results...';
+
+    try{
+      const res = await fetch(SEARCH_PRODUCT_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: query || '', category: category || '' })
+      });
+
+      if(!res.ok) throw new Error('Webhook returned status ' + res.status);
+
+      const data = await res.json();
+      allResults = Array.isArray(data) ? data : [];
+      applyFiltersAndRender();
+    }catch(err){
+      console.error('Could not load search results:', err);
+      document.getElementById('resultsList').innerHTML = `
+        <div class="empty-state">
+          <h3>Something went wrong</h3>
+          <p>We could not load products right now. Please try again shortly.</p>
+        </div>`;
+      document.getElementById('resultsCount').textContent = '';
+    }
   }
 
-  function confirmAlert() {
-    alert('Price alert set successfully! We will notify you when the price drops.');
-    closeAlert();
+  // ---------- Filters + sort ----------
+  function applyFiltersAndRender(){
+    const checkedPlatforms = Array.from(document.querySelectorAll('.platform-filter:checked')).map(el => el.value);
+    const minPrice = parseFloat(document.getElementById('minPrice').value);
+    const maxPrice = parseFloat(document.getElementById('maxPrice').value);
+    const categoryFilter = document.getElementById('categoryFilterSelect').value;
+    const sortBy = document.getElementById('sortSelect').value;
+
+    let filtered = allResults.filter(p => {
+      if(categoryFilter && (p.category || '').toLowerCase() !== categoryFilter.toLowerCase()) return false;
+
+      if(checkedPlatforms.length){
+        const hasPlatform = (p.prices || []).some(pr => checkedPlatforms.includes(pr.platform));
+        if(!hasPlatform) return false;
+      }
+
+      if(!isNaN(minPrice) && (p.best_price === null || p.best_price < minPrice)) return false;
+      if(!isNaN(maxPrice) && (p.best_price === null || p.best_price > maxPrice)) return false;
+
+      return true;
+    });
+
+    filtered.sort((a, b) => {
+      const aPrice = a.best_price ?? Infinity;
+      const bPrice = b.best_price ?? Infinity;
+      if(sortBy === 'low' || sortBy === 'best') return aPrice - bPrice;
+      if(sortBy === 'high') return bPrice - aPrice;
+      if(sortBy === 'savings') return savingsAmount(b) - savingsAmount(a);
+      return 0;
+    });
+
+    renderResults(filtered);
   }
 
-  function sortResults(value) {
-    console.log('Sorting by:', value);
+  function savingsAmount(p){
+    const prices = (p.prices || []).map(pr => pr.price).filter(n => typeof n === 'number');
+    if(prices.length < 2) return 0;
+    return Math.max(...prices) - Math.min(...prices);
   }
+
+  // ---------- Render ----------
+  function renderResults(list){
+    const container = document.getElementById('resultsList');
+    document.getElementById('resultsCount').textContent = list.length + (list.length === 1 ? ' product found' : ' products found');
+
+    if(!list.length){
+      container.innerHTML = `
+        <div class="empty-state">
+          <h3>No products match your search</h3>
+          <p>Try a different keyword or clear your filters.</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = list.map(resultCardHTML).join('');
+
+    // Wire up buttons after render (event delegation would also work, but this stays consistent with index.html's style)
+    container.querySelectorAll('.alert-btn').forEach(btn => {
+      btn.addEventListener('click', function(){
+        openAlertModal(this.dataset.productName);
+      });
+    });
+  }
+
+  function resultCardHTML(p){
+    const name = (p.product_name || '').toString().trim() || 'Unnamed product';
+    const category = (p.category || '').toString().trim();
+    const imageUrl = (p.image_url || '').toString().trim();
+    const prices = Array.isArray(p.prices) ? p.prices : [];
+    const bestPlatform = p.best_platform || '';
+    const bestPrice = p.best_price;
+
+    const imageBlock = imageUrl
+      ? `<img src="${imageUrl}" alt="${name}" loading="lazy">`
+      : `<span style="font-size:32px;">&#128230;</span>`;
+
+    const priceChips = prices.map(pr => {
+      const isBest = pr.platform === bestPlatform;
+      return `
+        <div class="price-chip ${isBest ? 'best' : ''}">
+          <span class="plat-name">${pr.platform}</span>
+          <span class="plat-price">₦${Number(pr.price).toLocaleString('en-NG')}</span>
+          ${isBest ? '<span class="best-tag">Best</span>' : ''}
+        </div>`;
+    }).join('');
+
+    const savings = savingsAmount(p);
+    const savingsLine = savings > 0
+      ? `<div class="savings-line">Save ₦${savings.toLocaleString('en-NG')} by choosing ${bestPlatform}</div>`
+      : '';
+
+    const bestLink = prices.find(pr => pr.platform === bestPlatform)?.link || '#';
+
+    const productUrl = `product.html?name=${encodeURIComponent(name)}&category=${encodeURIComponent(category)}&image=${encodeURIComponent(imageUrl)}`;
+
+    return `
+      <div class="result-card">
+        <div class="result-image">${imageBlock}</div>
+        <div class="result-body">
+          ${category ? `<span class="result-cat-tag">${category}</span>` : ''}
+          <div class="result-name">${name}</div>
+          <div class="price-row">${priceChips || '<span style="font-size:13px;color:var(--grey-text);">No prices available yet</span>'}</div>
+          ${savingsLine}
+          <div class="result-actions">
+            ${bestLink !== '#' ? `<a href="${bestLink}" target="_blank" rel="noopener" class="btn btn-solid">Buy Now</a>` : ''}
+            <button class="btn btn-outline-sm alert-btn" data-product-name="${name}">Set Price Alert</button>
+            <a href="${productUrl}" class="btn btn-outline-sm">View Details</a>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ---------- Search form ----------
+  document.getElementById('searchForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const query = document.getElementById('searchInput').value.trim();
+    const category = document.getElementById('categoryFilterSelect').value;
+    const params = new URLSearchParams();
+    if(query) params.set('q', query);
+    if(category) params.set('category', category);
+    window.location.href = 'search.html?' + params.toString();
+  });
+
+  // ---------- Filter/sort listeners ----------
+  document.querySelectorAll('.platform-filter').forEach(el => el.addEventListener('change', applyFiltersAndRender));
+  document.getElementById('minPrice').addEventListener('input', applyFiltersAndRender);
+  document.getElementById('maxPrice').addEventListener('input', applyFiltersAndRender);
+  document.getElementById('categoryFilterSelect').addEventListener('change', applyFiltersAndRender);
+  document.getElementById('sortSelect').addEventListener('change', applyFiltersAndRender);
+
+  document.getElementById('clearFiltersBtn').addEventListener('click', function(){
+    document.querySelectorAll('.platform-filter').forEach(el => el.checked = false);
+    document.getElementById('minPrice').value = '';
+    document.getElementById('maxPrice').value = '';
+    document.getElementById('categoryFilterSelect').value = initialCategory;
+    document.getElementById('sortSelect').value = 'best';
+    applyFiltersAndRender();
+  });
+
+  // ---------- Price alert modal ----------
+  const alertModal = document.getElementById('alertModal');
+  let currentAlertProduct = '';
+
+  function openAlertModal(productName){
+    currentAlertProduct = productName;
+    document.getElementById('alertModalTitle').textContent = 'Set a price alert for ' + productName;
+    document.getElementById('alertModalMsg').className = 'modal-msg';
+    document.getElementById('alertEmail').value = '';
+    document.getElementById('alertTargetPrice').value = '';
+    alertModal.classList.add('open');
+  }
+
+  document.getElementById('alertModalClose').addEventListener('click', function(){
+    alertModal.classList.remove('open');
+  });
+  alertModal.addEventListener('click', function(e){
+    if(e.target === alertModal) alertModal.classList.remove('open');
+  });
+
+  document.getElementById('alertSubmitBtn').addEventListener('click', async function(){
+    const email = document.getElementById('alertEmail').value.trim();
+    const targetPrice = document.getElementById('alertTargetPrice').value.trim();
+    const msgBox = document.getElementById('alertModalMsg');
+
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if(!emailValid){
+      msgBox.textContent = 'Please enter a valid email address.';
+      msgBox.className = 'modal-msg show error';
+      return;
+    }
+    if(!targetPrice || Number(targetPrice) <= 0){
+      msgBox.textContent = 'Please enter a valid target price.';
+      msgBox.className = 'modal-msg show error';
+      return;
+    }
+
+    try{
+      const res = await fetch(SET_PRICE_ALERT_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, product_name: currentAlertProduct, target_price: Number(targetPrice) })
+      });
+      if(!res.ok) throw new Error('Webhook returned status ' + res.status);
+
+      msgBox.textContent = 'Alert set. We will email you when the price drops.';
+      msgBox.className = 'modal-msg show success';
+    }catch(err){
+      console.error('Could not set price alert:', err);
+      msgBox.textContent = 'Something went wrong. Please try again.';
+      msgBox.className = 'modal-msg show error';
+    }
+  });
+
+  // ---------- Initial load ----------
+  fetchResults(initialQuery, initialCategory);
 </script>
-
 </body>
 </html>
