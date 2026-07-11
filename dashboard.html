@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - RebixMart</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1e3a5f;
+    --black: #0a0a0f;
+    --white: #ffffff;
+    --light-bg: #f4f6f9;
+    --border: #e2e8f0;
+    --text-muted: #64748b;
+    --success: #16a34a;
+    --warning: #d97706;
+    --danger: #dc2626;
+    --card-bg: #ffffff;
+  }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--light-bg);
+    color: var(--black);
+    min-height: 100vh;
+  }
+
+  /* NAVBAR */
+  .navbar {
+    background: var(--white);
+    padding: 0 24px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 38px;
+    height: 32px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .logo-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    color: #1a2b3f;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .user-greeting {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  .user-greeting strong {
+    color: var(--black);
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .btn-logout {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-logout:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--black);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* LAYOUT */
+  .dashboard-layout {
+    display: flex;
+    min-height: calc(100vh - 64px);
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 240px;
+    background: var(--black);
+    padding: 24px 0;
+    flex-shrink: 0;
+    border-right: 1px solid #1a1a2e;
+    position: sticky;
+    top: 64px;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+    transition: transform 0.3s;
+  }
+
+  .sidebar-section {
+    padding: 0 16px;
+    margin-bottom: 8px;
+  }
+
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: #475569;
+    text-transform: uppercase;
+    padding: 12px 8px 6px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    text-decoration: none;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+  }
+
+  .nav-item:hover {
+    background: #1a1a2e;
+    color: var(--white);
+  }
+
+  .nav-item.active {
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .nav-item .nav-icon {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+  }
+
+  .sidebar-divider {
+    height: 1px;
+    background: #1a1a2e;
+    margin: 12px 16px;
+  }
+
+  .nav-item.danger:hover {
+    background: #1a0a0a;
+    color: var(--danger);
+  }
+
+  /* MAIN CONTENT */
+  .main-content {
+    flex: 1;
+    padding: 28px 24px;
+    overflow-x: hidden;
+  }
+
+  .page-header {
+    margin-bottom: 24px;
+  }
+
+  .page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--black);
+    letter-spacing: 1px;
+  }
+
+  .page-subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  /* TAB CONTENT */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* STAT CARDS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: box-shadow 0.2s;
+  }
+
+  .stat-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .stat-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* SECTION CARDS */
+  .section-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .section-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .section-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--black);
+  }
+
+  .section-badge {
+    background: var(--light-bg);
+    color: var(--text-muted);
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  /* TABLE */
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  thead th {
+    background: var(--light-bg);
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+
+  tbody tr:hover { background: #f8fafc; }
+
+  tbody td {
+    padding: 14px 16px;
+    vertical-align: middle;
+  }
+
+  /* BADGES */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .badge-active {
+    background: #dcfce7;
+    color: var(--success);
+  }
+
+  .badge-triggered {
+    background: #fef3c7;
+    color: var(--warning);
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .btn-primary:hover { background: #16305a; }
+
+  .btn-danger {
+    background: #fee2e2;
+    color: var(--danger);
+  }
+
+  .btn-danger:hover { background: #fecaca; }
+
+  .btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--navy);
+    color: var(--navy);
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    padding: 48px 20px;
+    text-align: center;
+  }
+
+  .empty-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+    opacity: 0.4;
+  }
+
+  .empty-title {
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 6px;
+  }
+
+  .empty-text {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  /* LOADING */
+  .loading-state {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text-muted);
+  }
+
+  .spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--border);
+    border-top-color: var(--navy);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 12px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* INLINE MESSAGES */
+  .msg {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    display: none;
+  }
+
+  .msg.show { display: flex; align-items: center; gap: 8px; }
+  .msg-success { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+  .msg-error { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+
+  /* SETTINGS FORM */
+  .settings-form {
+    padding: 24px;
+    max-width: 500px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 6px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    color: var(--black);
+    background: var(--white);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .form-input:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* OVERVIEW PREVIEW */
+  .preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .product-mini-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    padding: 12px;
+    font-size: 12px;
+  }
+
+  .product-mini-card img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 8px;
+  }
+
+  .product-mini-name {
+    font-weight: 600;
+    color: var(--black);
+    font-size: 11px;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .product-mini-price {
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  /* SIDEBAR OVERLAY FOR MOBILE */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 98;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .user-greeting { display: none; }
+
+    .sidebar {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      height: calc(100vh - 64px);
+      z-index: 99;
+      transform: translateX(-100%);
+    }
+
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-overlay.open { display: block; }
+
+    .main-content { padding: 20px 16px; }
+
+    .form-row { grid-template-columns: 1fr; }
+
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <div class="logo-icon">
+      <svg width="38" height="34" viewBox="0 0 38 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cart outline -->
+        <path d="M2 4 L7 4 L11 21 L28 21 L32 9 L9 9" stroke="#1a2b3f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <!-- Bag inside cart -->
+        <rect x="14" y="4" width="11" height="10" rx="2.5" fill="#e6792f"/>
+        <!-- Bag handle -->
+        <path d="M17 4 Q19.5 0.5 22 4" stroke="#e6792f" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Wheels -->
+        <circle cx="14" cy="27" r="2.6" fill="#1a2b3f"/>
+        <circle cx="25" cy="27" r="2.6" fill="#1a2b3f"/>
+      </svg>
+    </div>
+    <span class="logo-text">RebixMart</span>
+  </a>
+  <div class="nav-right">
+    <span class="user-greeting">Welcome back, <strong id="navName">User</strong></span>
+    <div class="avatar" id="navAvatar">U</div>
+    <button class="btn-logout" onclick="logout()">Logout</button>
+    <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Main</div>
+      <button class="nav-item active" onclick="switchTab('overview', this)">Overview</button>
+      <button class="nav-item" onclick="switchTab('alerts', this)">Price Alerts</button>
+      <button class="nav-item" onclick="switchTab('saved', this)">Saved Products</button>
+      <button class="nav-item" onclick="switchTab('activity', this)">Recent Activity</button>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Account</div>
+      <button class="nav-item" onclick="switchTab('settings', this)">Settings</button>
+      <a href="index.html" class="nav-item">Back to Home</a>
+      <button class="nav-item danger" onclick="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- OVERVIEW TAB -->
+    <div class="tab-content active" id="tab-overview">
+      <div class="page-header">
+        <h1 class="page-title">Overview</h1>
+        <p class="page-subtitle" id="overviewSubtitle">Here is your activity summary.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="statActive">0</div>
+          <div class="stat-label">Active Alerts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statTriggered">0</div>
+          <div class="stat-label">Alerts Triggered</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statSaved">0</div>
+          <div class="stat-label">Saved Products</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">₦0</div>
+          <div class="stat-label">Total Savings</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <span class="section-title">Recent Alerts</span>
+          <button class="btn btn-outline btn-sm" onclick="switchTab('alerts', document.querySelector('[onclick*=\"alerts\"]'))">View All</button>
+        </div>
+        <div id="overviewAlertsContainer">
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading alerts...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICE ALERTS TAB -->
+    <div class="tab-content" id="tab-alerts">
+      <div class="page-header">
+        <h1 class="page-title">Price Alerts</h1>
+        <p class="page-subtitle">Get notified when prices drop to your target.</p>
+      </div>
+
+      <div id="alertsMsg" class="msg"></div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <span class="section-title">Your Alerts</span>
+          <span class="section-badge" id="alertsCount">Loading...</span>
+        </div>
+        <div id="alertsContainer">
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading your alerts...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAVED PRODUCTS TAB -->
+    <div class="tab-content" id="tab-saved">
+      <div class="page-header">
+        <h1 class="page-title">Saved Products</h1>
+        <p class="page-subtitle">Products you are watching.</p>
+      </div>
+      <div class="section-card">
+        <div class="empty-state">
+          <div class="empty-title">No saved products yet</div>
+          <p class="empty-text">Save products from search results to track them here.</p>
+          <br>
+          <a href="search.html" class="btn btn-primary">Browse Products</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECENT ACTIVITY TAB -->
+    <div class="tab-content" id="tab-activity">
+      <div class="page-header">
+        <h1 class="page-title">Recent Activity</h1>
+        <p class="page-subtitle">Your recent actions on RebixMart.</p>
+      </div>
+      <div class="section-card">
+        <div class="empty-state">
+          <div class="empty-title">No recent activity</div>
+          <p class="empty-text">Your searches and alerts will appear here.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div class="tab-content" id="tab-settings">
+      <div class="page-header">
+        <h1 class="page-title">Settings</h1>
+        <p class="page-subtitle">Manage your account details.</p>
+      </div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <span class="section-title">Personal Information</span>
+        </div>
+        <div class="settings-form">
+          <div id="settingsMsg" class="msg"></div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-input" id="settingsFirstName" placeholder="First name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-input" id="settingsLastName" placeholder="Last name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" id="settingsEmail" placeholder="Email address" readonly style="background:#f8fafc; color:#94a3b8;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-input" id="settingsPhone" placeholder="08012345678">
+          </div>
+          <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const GET_ALERTS_URL = 'https://newrebix.app.n8n.cloud/webhook/get-alerts';
+  const DELETE_ALERT_URL = 'https://newrebix.app.n8n.cloud/webhook/delete-alert';
+
+  let currentUser = null;
+  let allAlerts = [];
+
+  // ── INIT ──
+  function init() {
+    const stored = localStorage.getItem('rebixmart_user');
+    if (!stored) { window.location.href = 'login.html'; return; }
+
+    try {
+      currentUser = JSON.parse(stored);
+    } catch(e) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    if (!currentUser || !currentUser.email) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    // Populate UI with user data
+    const firstName = currentUser.firstName || currentUser.first_name || 'User';
+    const lastName = currentUser.lastName || currentUser.last_name || '';
+    const email = currentUser.email || '';
+
+    document.getElementById('navName').textContent = firstName;
+    document.getElementById('navAvatar').textContent = firstName.charAt(0).toUpperCase();
+    document.getElementById('overviewSubtitle').textContent = `Welcome back, ${firstName}. Here is your activity summary.`;
+
+    // Settings form prefill
+    document.getElementById('settingsFirstName').value = firstName;
+    document.getElementById('settingsLastName').value = lastName;
+    document.getElementById('settingsEmail').value = email;
+
+    loadAlerts();
+  }
+
+  // ── LOAD ALERTS ──
+  async function loadAlerts() {
+    const email = currentUser.email;
+
+    try {
+      const res = await fetch(`${GET_ALERTS_URL}?email=${encodeURIComponent(email)}`);
+      const data = await res.json();
+
+      // Handle both array and wrapped responses
+      let alerts = Array.isArray(data) ? data : (data.data || []);
+      // Filter out empty objects
+      alerts = alerts.filter(a => a && a.email);
+      allAlerts = alerts;
+
+      renderAlerts(alerts);
+      updateStats(alerts);
+      renderOverviewAlerts(alerts);
+
+    } catch(err) {
+      renderAlertsError();
+    }
+  }
+
+  function updateStats(alerts) {
+    const active = alerts.filter(a => a.status === 'Active').length;
+    const triggered = alerts.filter(a => a.status === 'Triggered' || a.status === 'triggered').length;
+    document.getElementById('statActive').textContent = active;
+    document.getElementById('statTriggered').textContent = triggered;
+  }
+
+  function renderAlerts(alerts) {
+    const container = document.getElementById('alertsContainer');
+    const countEl = document.getElementById('alertsCount');
+
+    if (!alerts || alerts.length === 0) {
+      countEl.textContent = '0 alerts';
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-title">No price alerts yet</div>
+          <p class="empty-text">Search for a product and set a target price to get notified when it drops.</p>
+          <br>
+          <a href="search.html" class="btn btn-primary">Search Products</a>
+        </div>`;
+      return;
+    }
+
+    countEl.textContent = `${alerts.length} alert${alerts.length !== 1 ? 's' : ''}`;
+
+    const rows = alerts.map(alert => {
+      const isActive = alert.status === 'Active';
+      const badgeClass = isActive ? 'badge-active' : 'badge-triggered';
+      const statusLabel = isActive ? 'Active' : 'Triggered';
+      const price = Number(alert.target_price).toLocaleString();
+      const date = alert.date_created ? new Date(alert.date_created).toLocaleDateString('en-NG', { day: 'numeric', month: 'short', year: 'numeric' }) : 'N/A';
+
+      return `
+        <tr id="alert-row-${alert.product_id}">
+          <td><strong>Product #${alert.product_id}</strong></td>
+          <td>₦${price}</td>
+          <td><span class="badge ${badgeClass}"><span class="badge-dot"></span>${statusLabel}</span></td>
+          <td style="color:var(--text-muted); font-size:13px;">${date}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" onclick="deleteAlert('${alert.product_id}', this)">
+              Delete
+            </button>
+          </td>
+        </tr>`;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Target Price</th>
+              <th>Status</th>
+              <th>Date Set</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`;
+  }
+
+  function renderOverviewAlerts(alerts) {
+    const container = document.getElementById('overviewAlertsContainer');
+    if (!alerts || alerts.length === 0) {
+      container.innerHTML = `<div class="empty-state"><p class="empty-text">No alerts set yet.</p></div>`;
+      return;
+    }
+
+    const preview = alerts.slice(0, 3);
+    const rows = preview.map(alert => {
+      const isActive = alert.status === 'Active';
+      const badgeClass = isActive ? 'badge-active' : 'badge-triggered';
+      const price = Number(alert.target_price).toLocaleString();
+      return `
+        <tr>
+          <td><strong>Product #${alert.product_id}</strong></td>
+          <td>₦${price}</td>
+          <td><span class="badge ${badgeClass}"><span class="badge-dot"></span>${alert.status}</span></td>
+        </tr>`;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Product</th><th>Target Price</th><th>Status</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`;
+  }
+
+  function renderAlertsError() {
+    const container = document.getElementById('alertsContainer');
+    const overviewContainer = document.getElementById('overviewAlertsContainer');
+    const errHtml = `
+      <div class="empty-state">
+        <div class="empty-title">Could not load alerts</div>
+        <p class="empty-text">Check your connection and try again.</p>
+        <br>
+        <button class="btn btn-outline" onclick="loadAlerts()">Try Again</button>
+      </div>`;
+    container.innerHTML = errHtml;
+    overviewContainer.innerHTML = errHtml;
+    document.getElementById('alertsCount').textContent = 'Error';
+  }
+
+  // ── DELETE ALERT ──
+  async function deleteAlert(productId, btn) {
+    btn.disabled = true;
+    btn.textContent = 'Deleting...';
+
+    try {
+      const res = await fetch(DELETE_ALERT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: currentUser.email, product_id: productId })
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        // Remove row immediately
+        const row = document.getElementById(`alert-row-${productId}`);
+        if (row) row.remove();
+
+        // Update count
+        allAlerts = allAlerts.filter(a => String(a.product_id) !== String(productId));
+        document.getElementById('alertsCount').textContent = `${allAlerts.length} alert${allAlerts.length !== 1 ? 's' : ''}`;
+        updateStats(allAlerts);
+
+        showMsg('alertsMsg', 'success', 'Alert deleted successfully.');
+
+        if (allAlerts.length === 0) {
+          renderAlerts([]);
+        }
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = '🗑 Delete';
+        showMsg('alertsMsg', 'error', 'Failed to delete alert. Please try again.');
+      }
+    } catch(err) {
+      btn.disabled = false;
+      btn.innerHTML = '🗑 Delete';
+      showMsg('alertsMsg', 'error', 'Network error. Please try again.');
+    }
+  }
+
+  // ── SETTINGS ──
+  function saveSettings() {
+    const firstName = document.getElementById('settingsFirstName').value.trim();
+    const lastName = document.getElementById('settingsLastName').value.trim();
+
+    if (!firstName) {
+      showMsg('settingsMsg', 'error', 'First name is required.');
+      return;
+    }
+
+    // Update localStorage
+    currentUser.firstName = firstName;
+    currentUser.lastName = lastName;
+    localStorage.setItem('rebixmart_user', JSON.stringify(currentUser));
+
+    // Update navbar
+    document.getElementById('navName').textContent = firstName;
+    document.getElementById('navAvatar').textContent = firstName.charAt(0).toUpperCase();
+
+    showMsg('settingsMsg', 'success', 'Changes saved successfully.');
+  }
+
+  // ── HELPERS ──
+  function showMsg(id, type, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.className = `msg msg-${type} show`;
+    el.textContent = text;
+    setTimeout(() => { el.className = 'msg'; }, 4000);
+  }
+
+  function switchTab(tabName, clickedEl) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('tab-' + tabName).classList.add('active');
+    if (clickedEl) clickedEl.classList.add('active');
+    closeSidebar();
+  }
+
+  function logout() {
+    localStorage.removeItem('rebixmart_user');
+    window.location.href = 'login.html';
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebarOverlay').classList.toggle('open');
+  }
+
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  }
+
+  // ── START ──
+  init();
+</script>
+</body>
+</html>
