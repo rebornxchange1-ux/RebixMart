@@ -933,7 +933,7 @@
   // ---------- Price alert banner submit ----------
   // NOTE: webhook URL below is a placeholder. Replace SET_PRICE_ALERT_WEBHOOK_URL
   // with the real n8n production webhook URL for the "Rebix Set Price Alert" workflow.
-  const SET_PRICE_ALERT_WEBHOOK_URL = 'SET_PRICE_ALERT_WEBHOOK_URL = 'http://n8n.whytejinjaherbal.com.ng:5678/webhook/set-alart';
+  const SET_PRICE_ALERT_WEBHOOK_URL = 'SET_PRICE_ALERT_WEBHOOK_URL = 'http://n8n.whytejinjaherbal.com.ng/webhook/set-alart';
 
   document.getElementById('alertForm').addEventListener('submit', async function(e){
     e.preventDefault();
@@ -974,7 +974,7 @@
   // ---------- Today's Best Deals ----------
   // Pulls real products from the Search Product webhook. No invented prices,
   // no invented names — everything here comes from the Google Sheet via n8n.
-  const SEARCH_PRODUCT_WEBHOOK_URL = 'http://n8n.whytejinjaherbal.com.ng:5678/webhook/RebixMart';
+  const SEARCH_PRODUCT_WEBHOOK_URL = 'http://n8n.whytejinjaherbal.com.ng/webhook/RebixMart';
 
   function dealCardHTML(p){
     // Confirmed n8n output field names (from live testing, July 2026):
